@@ -1,5 +1,45 @@
-/*
-Theme Name: My Theme
-Author: Jin
-Text Domain: mytheme
-*/
+#logo img.custom-logo {
+  width: 216px;
+  height: 14px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  height: 80px;
+}
+
+#menu-main-menu {
+  display: flex;
+  flex-direction: row;
+}
+#menu-main-menu li {
+  padding-left: 30px;
+  list-style: none;
+}
+#menu-main-menu li a {
+  text-decoration: none;
+  color: black;
+  size: 16px;
+}
+
+.footer ul {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: 1PX black solid;
+  padding: 10px 0;
+}
+.footer ul li {
+  list-style: none;
+  padding: 0 30px;
+}
+.footer ul li a {
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=style.css.map */
