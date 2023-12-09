@@ -28,3 +28,12 @@ function logo_setup() {
     ));
 }
 add_action('after_setup_theme', 'logo_setup');
+
+
+function enqueue_custom_script() {
+
+    // Pass PHP value to script
+    $reference_field_value = get_post_meta(get_the_ID(), 'reference', true);
+    wp_localize_script('custom-script', 'custom_vars', array('reference_value' => $reference_field_value));
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_script');
