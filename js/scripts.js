@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
-    $('.btn-close').on('click', function(){
+    $('.btn-close').on('click', function (event) {
+        event.preventDefault();
         $('.form-contact').toggle();
     });
 });
@@ -40,3 +41,45 @@ $(document).ready(function ($) {
             $('#thumbnail-container').empty();
         }
     });
+
+// ajax in front-page to query photos //
+
+$(function($){
+    var page = 2; // The initial page number
+    var loading = false;
+    var $loadMoreButton = $('#load-more-button');
+    var $photoContainer = $('#photo-container');
+
+    $loadMoreButton.on('click', function (event) {
+        
+        event.preventDefault();
+
+        if( ! loading ) {
+            loading = true;
+            console.log('works till here in button click');
+            
+            const ajaxurl = $(this).data('ajaxurl');
+
+            console.log(ajaxurl);
+            $.ajax({
+                method: 'POST',
+                url: ajaxurl,
+                dataType: 'html', 
+                data: {
+                    action: 'load_more_photos',
+                    page: page,
+                },
+                success: function(data) {
+                    //$photoContainer.append(data);
+                    //Append before the button
+                    $loadMoreButton.parent().before(data);
+                    
+                    page++;
+                    loading = false;
+                    console.log(page);
+                }
+            });
+            console.log('reached here');
+        }
+    });
+});
