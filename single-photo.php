@@ -142,6 +142,21 @@ if ($custom_query->have_posts()) :
 endif;
 ?>
 
+<!-- Structure de la lightbox -->
+
+<div class="overlay-container" id="dynamic-overlay">
+        <span class="overlay-close">&times;</span>
+        <img id="dynamic-image" src="" alt="Dynamic Image">
+        <div class="icon-container">
+            <a id="full-screen" href="#" class="full-screen-icon"><i class="fa-solid fa-expand"></i></a>
+            <a href="<?php the_permalink(get_the_ID()) ?>" id="detail-page" class="send-to-page-icon"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        </div>
+        
+        <a href="#" class="overlay-prev" id="prev-btn">&lt; Previous</a>
+        <a href="#" class="overlay-next" id="next-btn">Next &gt;</a>
+        <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>
+        <span class="category-name"><?php echo esc_html($category_name)?></span>
+    </div>
 
 
 <button>Toutes les photos</button>

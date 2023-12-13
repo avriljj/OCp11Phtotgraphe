@@ -12,8 +12,8 @@ $category_name = !empty($category_terms) ? $category_terms[0]->name : '';
 if (!empty($matches[0])) {
 
     echo '<div class="post-container" data-post-id="' . get_the_ID() . '" data-ajaxurl="' . esc_url(admin_url('admin-ajax.php')) . '">';
-    //echo '<a class="overlay-link" href=" ' . esc_url(get_permalink()) . '"';
-    echo '<a class="overlay-link" href="' . esc_url(get_permalink()) . '" data-permalink="' . esc_url(get_permalink()) . '"';
+
+    echo '<div class="overlay-link" href="' . esc_url(get_permalink()) . '" data-permalink="' . esc_url(get_permalink()) . '"';
     echo ' data-photo-reference="' . esc_attr($photo_reference) . '"';
     echo ' data-category-name="' . esc_attr($category_name) . '"';
     echo '> ';
@@ -25,19 +25,19 @@ if (!empty($matches[0])) {
 
     // Add Font Awesome icons for full screen and sending to another page
     echo '<div class="overlay">';
-    echo '<i class="fas fa-eye" id="open-post"></i>'; 
+    echo '<a id="open-post" href="' . esc_url(get_permalink()) . '"><i class="fas fa-eye"></i></a>'; 
     //echo '<i class="fa-solid fa-eye"></i>'; // Eye icon
     echo '<i class="fa-solid fa-expand"></i>'; // Full screen icon
     echo '<span class="photo-reference-photo-block">' . esc_html($photo_reference) . '</span>';
     echo '<span class="category-name-photo-block">' . esc_html($category_name) . '</span>';
     echo '</div>';
-    echo '</a>';
+    echo '</div>';
     echo '</div>';
 
     return $matches;
     
 }
 
-
 ?>
+
 

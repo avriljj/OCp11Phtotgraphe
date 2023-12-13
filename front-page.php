@@ -65,12 +65,6 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 </form>
 
 <div>
-
-<button onclick="toggleOverlay()">Toggle Overlay</button>
-<div id="overlay"><button onclick="toggleOverlay()">Toggle Overlay</button></div>
-
-
-
         <div id="posts-container">
             <p>posts container here</p>
             <?php
@@ -89,7 +83,8 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
     $category_name = !empty($category_terms) ? $category_terms[0]->name : '';
     
     ?>
-    <a href="<?php the_permalink(); ?>" id="image-link" data-post-id="<?php the_ID();?>" data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>">
+    <?php $theLink = the_permalink(get_the_ID());?>
+    <a href="<?php echo the_permalink(get_the_ID()); ?>" id="image-link" data-post-id="<?php the_ID();?>" data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>">
         <?php get_template_part('template-parts/content', 'photo_block'); ?>
     </a>
     <!-- Structure de la lightbox -->
@@ -99,21 +94,15 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         <img id="dynamic-image" src="" alt="Dynamic Image">
         <div class="icon-container">
             <a id="full-screen" href="#" class="full-screen-icon"><i class="fa-solid fa-expand"></i></a>
-            <a href="<?php the_permalink(); ?>" id="detail-page" class="send-to-page-icon"><i class="fa-solid fa-circle-arrow-right"></i></a>
+            <a id="detail-page" href="<?php echo $theLink ?>" class="send-to-page-icon"><i class="fa-solid fa-eye"></i></a>
+            <?php echo $theLink ?>
         </div>
         
+
         <a href="#" class="overlay-prev" id="prev-btn">&lt; Previous</a>
         <a href="#" class="overlay-next" id="next-btn">Next &gt;</a>
         <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>
         <span class="category-name"><?php echo esc_html($category_name)?></span>
-        <?php 
-        error_log('Post ID: ' . get_the_ID());
-    error_log('Photo Reference: ' . $photo_reference);
-    error_log('Category Name: ' . $category_name);
-    var_dump($photo_reference);
-    var_dump($category_name);
-    var_dump(the_permalink());
-        ?>
     </div>
 
 <?php endwhile; ?>

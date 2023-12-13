@@ -200,11 +200,23 @@ function closeBtn() {
     $('#dynamic-overlay').on('click', function () {
         $(this).hide();
     });
+
+    // eye icon in photo_block when clicked //
+    $(document).on('click', '#open-post', function (e) {
+        e.preventDefault();
+        var postURL = $(this).closest('.overlay-link').attr('href');
+        console.log(postURL);
     
+        // Open the current post link
+        window.location.href = postURL;
+    });
+    
+
 // ajax //
     jQuery(document).ready(function ($) {
         var images;
         var currentImageIndex;
+        var overlayContainer;
 
     
         $('.post-container').on('click', function (e) {
@@ -223,7 +235,7 @@ function closeBtn() {
                 },
                 success: function (data) {
 
-                    var overlayContainer = $(data);
+                     overlayContainer = $(data);
 
                     images = $(data).find('img:gt(0)');
                     
@@ -239,15 +251,28 @@ function closeBtn() {
                         var categoryName = currentOverlayLink.data('category-name');
                         console.log('photoReference:', photoReference);
                         console.log('categoryName:', categoryName);
+                        
 
+                       
                         updateImage(images, currentImageIndex, photoReference, categoryName);
                         $('#dynamic-overlay').show();
                     }
-                    console.log(images);
+                    
                 }
             });
         });
     
+        //detail page //
+        $('#detail-page').on('click', function (e) {
+            e.preventDefault();
+            var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
+            var postURL = currentOverlayLink.attr('href');
+            console.log(postURL);
+        // Open the current post link
+            window.location.href = postURL;
+        });
+      
+        
         // Previous button click
         $('#prev-btn').on('click', function (e) {
             e.preventDefault();
