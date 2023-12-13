@@ -196,32 +196,24 @@ function closeBtn() {
 
 //overlay lightbox//
 
-function toggleOverlay() {
-    var overlay = document.getElementById('overlay');
-    if (overlay.style.display === 'none' || overlay.style.display === '') {
-        overlay.style.display = 'block';
-    } else {
-        overlay.style.display = 'none';
-    }
-}
-
     // Close the overlay when clicking outside the image
     $('#dynamic-overlay').on('click', function () {
         $(this).hide();
     });
-
-
-
     
+// ajax //
     jQuery(document).ready(function ($) {
         var images;
         var currentImageIndex;
+
     
         $('.post-container').on('click', function (e) {
             e.preventDefault();
             currentImageIndex = $('.post-container').index($(this));
     
-            const ajaxurl = $(this).data('ajaxurl');
+        var overlayLink = $(this).find('.overlay-link');
+           
+            const ajaxurl = overlayLink.data('ajaxurl'); 
     
             $.ajax({
                 url: ajaxurl,
@@ -230,11 +222,28 @@ function toggleOverlay() {
                     action: 'load_overlay',
                 },
                 success: function (data) {
-                    images = $(data).find('img');
+
+                    var overlayContainer = $(data);
+
+                    images = $(data).find('img:gt(0)');
+                    
+                    
                     if (images.length > 0) {
-                        updateImage(images, currentImageIndex);
+                        images = $(data).find('img:gt(0)').filter(function() {
+                            // Filter out images with no contents
+                            return $.trim($(this).attr('src')) !== '';
+                        });
+
+                        var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
+                        var photoReference = currentOverlayLink.data('photo-reference');
+                        var categoryName = currentOverlayLink.data('category-name');
+                        console.log('photoReference:', photoReference);
+                        console.log('categoryName:', categoryName);
+
+                        updateImage(images, currentImageIndex, photoReference, categoryName);
                         $('#dynamic-overlay').show();
                     }
+                    console.log(images);
                 }
             });
         });
@@ -242,15 +251,21 @@ function toggleOverlay() {
         // Previous button click
         $('#prev-btn').on('click', function (e) {
             e.preventDefault();
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            updateImage(images, currentImageIndex);
+            currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
         });
     
         // Next button click
         $('#next-btn').on('click', function (e) {
             e.preventDefault();
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            updateImage(images, currentImageIndex);
+            currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
         });
     
         // Close overlay
@@ -279,9 +294,14 @@ function toggleOverlay() {
         });
     
         // Function to update the image source
-        function updateImage(images, index) {
+        function updateImage(images, index, photoReference, categoryName) {
             var imageUrl = $(images[index]).attr('src');
+            
             $('#dynamic-image').attr('src', imageUrl);
+            $('.photo-reference').text(photoReference);
+            $('.category-name').text(categoryName);
             $('#dynamic-overlay').show();
         }
+
+        
     });
