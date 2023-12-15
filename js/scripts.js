@@ -634,4 +634,4 @@ function show_overlay_2images() {
         });
     }
     
-   // show_overlay_2images();
+    show_overlay_2images();
