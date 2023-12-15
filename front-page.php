@@ -64,67 +64,19 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
 </form>
 
-<div>
-        <div id="posts-container">
-            <p>posts container here</p>
-            <?php
-            $argsImages = array(  
-                'post_type' => 'photo',
-                'post_status' => 'publish',
-                'posts_per_page' => 12,  
-            );
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // Call your custom function when the document is ready
+            show_overlay();
+        });
+    </script>
 
-            $loop = new WP_Query( $argsImages ); 
-
-            while ($loop->have_posts()) : $loop->the_post(); ?>
-    <?php 
-    $photo_reference = get_post_meta(get_the_ID(), 'reference', true);
-    $category_terms = get_the_terms(get_the_ID(), 'categorie');
-    $category_name = !empty($category_terms) ? $category_terms[0]->name : '';
-    
-    ?>
-    <?php $theLink = the_permalink(get_the_ID());?>
-    <a href="<?php echo the_permalink(get_the_ID()); ?>" id="image-link" data-post-id="<?php the_ID();?>" data-ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>">
-        <?php get_template_part('template-parts/content', 'photo_block'); ?>
-    </a>
-    <!-- Structure de la lightbox -->
-
-    <div class="overlay-container" id="dynamic-overlay">
-        <span class="overlay-close">&times;</span>
-        <img id="dynamic-image" src="" alt="Dynamic Image">
-        <div class="icon-container">
-            <a id="full-screen" href="#" class="full-screen-icon"><i class="fa-solid fa-expand"></i></a>
-            <a id="detail-page" href="<?php echo $theLink ?>" class="send-to-page-icon"><i class="fa-solid fa-eye"></i></a>
-            <?php echo $theLink ?>
-        </div>
-        
-
-        <a href="#" class="overlay-prev" id="prev-btn">&lt; Previous</a>
-        <a href="#" class="overlay-next" id="next-btn">Next &gt;</a>
-        <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>
-        <span class="category-name"><?php echo esc_html($category_name)?></span>
-    </div>
-
-<?php endwhile; ?>
-
-<?php
-
-            wp_reset_postdata();
-            ?>
-        </div>
-
-        
-        
-
-        
-    </div>
+<div id="posts-container" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
 </div>
 
 
 <div>
-
 <button id="load-more-button" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">Load More Photos</button>
-
 </div>
 </div>
 <?php get_footer();

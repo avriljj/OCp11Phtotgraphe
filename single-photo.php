@@ -105,67 +105,28 @@ if (!empty($taxonomies)) {
 }
 ?>
 
-<div class="related-images">
 <?php
+// single-photo.php
 
+// Check if the current page is a single post and has the category "photo"
+?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // Call your custom function when the document is ready
+            show_overlay_2images();
+        });
+    </script>
+    <?php
 
-// Query the posts from the specified category
-$args = array(  
-        'post_type' => 'photo',
-        'post_status' => 'publish',
-        'posts_per_page' => 2, 
-        'post__not_in'   => array($page_id),
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'categorie',
-                'field'    => 'slug',
-                'terms'    =>  $term_slug,
-                
-            )
-        )
-        
-    );
-$custom_query = new WP_Query($args);
+// Rest of your single-photo.php template code goes here
 ?>
 
-<?php
-if ($custom_query->have_posts()) :
-    while ($custom_query->have_posts()) : $custom_query->the_post();
 
-        // Display the template part
-        get_template_part('template-parts/content', 'photo_block');
 
-    endwhile;
-
-    // Always reset post data after a custom query
-    wp_reset_postdata();
-endif;
-?>
-
-<!-- Structure de la lightbox -->
-
-<div class="overlay-container" id="dynamic-overlay">
-        <span class="overlay-close">&times;</span>
-        <img id="dynamic-image" src="" alt="Dynamic Image">
-        <div class="icon-container">
-            <a id="full-screen" href="#" class="full-screen-icon"><i class="fa-solid fa-expand"></i></a>
-            <a href="<?php the_permalink(get_the_ID()) ?>" id="detail-page" class="send-to-page-icon"><i class="fa-solid fa-circle-arrow-right"></i></a>
-        </div>
-        
-        <a href="#" class="overlay-prev" id="prev-btn">&lt; Previous</a>
-        <a href="#" class="overlay-next" id="next-btn">Next &gt;</a>
-        <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>
-        <span class="category-name"><?php echo esc_html($category_name)?></span>
-    </div>
-
+<div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
 
 <button>Toutes les photos</button>
 </div>
-
-
-
-
-                <!-- Ajoutez d'autres éléments ou métadonnées ici selon vos besoins -->
 
             </article>
 
