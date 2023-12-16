@@ -55,7 +55,7 @@ function enqueue_custom_script() {
             $term_slug = $terms[0]->slug;
         } else {
             // If there are no terms assigned to the page
-            echo 'No terms found for this page.';
+            //echo 'No terms found for this page.';
             return; // Stop execution if there are no terms
         }
     } else {

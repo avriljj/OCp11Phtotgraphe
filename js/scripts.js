@@ -485,7 +485,7 @@ $(document).ready(function ($) {
             return;
         }
 
-        console.log('Button clicked, AJAX URL:', ajaxurl);
+        console.log('load more Button clicked, AJAX URL:', ajaxurl);
 
         // Make AJAX request
         $.ajax({
@@ -530,7 +530,7 @@ function getFirstPhotos() {
             return;
         }
 
-        console.log('Button clicked, AJAX URL:', ajaxurl);
+        console.log('first load, AJAX URL:', ajaxurl);
 
         // Make AJAX request
         $.ajax({
