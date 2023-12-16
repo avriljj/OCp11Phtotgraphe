@@ -33,13 +33,34 @@ $(document).ready(function($) {
 
 // toggle button //
 
+function hasMorePhotosFunc() {
+    $(document).ready(function() {
+        // Get the total number of pages and the current page from localized data
+        var totalPages = customScriptData.totalPages;
+        var currentPage = customScriptData.currentPage;
+    
+        // Check if the current page is equal to the total number of pages
+        if (currentPage >= totalPages) {
+            // Do something if the current page is the last page
+            console.log('Current page is the last page');
+            // For example, you might want to return false in this case
+            return hasMorePhotos = false;
+            
+            
+        }
+        return hasMorePhotos = true;;
+    });
+}
+
+
+
 // toggle the load more button //
 function toggleLoadMoreButton() {
     $(document).ready(function ($) {
         // $('#load-more-button').toggle(hasMorePhotos);
          $('#load-more-button').on('click', function () {
              // Update hasMorePhotos to false after the button is clicked
-             hasMorePhotos = false;
+             hasMorePhotos = hasMorePhotosFunc();
      
              // Toggle the visibility of the load-more-button based on the updated hasMorePhotos
              $('#load-more-button').toggle(hasMorePhotos);
@@ -152,7 +173,7 @@ $(document).ready(function ($) {
                 // Handle the response, e.g., update the content area with filtered posts
                 console.log('in the filter date');
                 $('#posts-container').html(response);
-                dataTable = $('#posts-container').html(data);
+                dataTable = $('#posts-container').html(response);
                 show_all_overlay();
                 
             },
@@ -164,17 +185,19 @@ $(document).ready(function ($) {
 
 //close btn of contact form toggle and get the reference //
 
-$(document).ready(function(){
-    $('.btn-close').on('click', function (event) {
-        event.preventDefault();
-        $('.form-contact').toggle();
+function formFunction() {
+    $(document).ready(function(){
+        $('.btn-close').on('click', function (event) {
+            event.preventDefault();
+            $('.form-contact').toggle();
+        });
+        // get the reference //
+        var referenceValue = custom_vars.reference_value;
+        $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
+    
     });
-    // get the reference //
-    var referenceValue = custom_vars.reference_value;
-    $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
-
-});
-
+    
+}
 // eye icon in photo_block when clicked //
 $(document).on('click', '#open-post', function (e) {
     e.preventDefault();
@@ -496,7 +519,9 @@ $(document).ready(function ($) {
 
 
 // ajax for first time load the photos 12 first //
-$(document).ready(function (){
+function getFirstPhotos() {
+
+    $(document).ready(function (){
   
         const ajaxurl =  $('#posts-container').data('ajaxurl');
 
@@ -524,6 +549,7 @@ $(document).ready(function (){
             },
         });
 });
+}
 
 
 
@@ -531,39 +557,41 @@ $(document).ready(function (){
 
 // load 2 images on single-photo page //
 
-$(document).ready(function () {
+function load2images() {
+    $(document).ready(function () {
 
-    var postId = php_vars.postId;
-    var termSlug = php_vars.termSlug;
-  
-        const ajaxurl = $('.related-images').data('ajaxurl');
+        var postId = php_vars.postId;
+        var termSlug = php_vars.termSlug;
+      
+            const ajaxurl = $('.related-images').data('ajaxurl');
+        
+            if (!ajaxurl) {
+                console.error('Error: data-ajaxurl not set ine load2imagesRelated');
+                return;
+            }
+        
+            console.log(' AJAX URL:', ajaxurl);
+        
+            // Make AJAX request
+            $.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {
+                    action: 'load_2images_Related',
+                    post_id: postId,
+                    termSlug: termSlug,
     
-        if (!ajaxurl) {
-            console.error('Error: data-ajaxurl not set ine load2imagesRelated');
-            return;
-        }
-    
-        console.log(' AJAX URL:', ajaxurl);
-    
-        // Make AJAX request
-        $.ajax({
-            type: 'POST',
-            url: ajaxurl,
-            data: {
-                action: 'load_2images_Related',
-                post_id: postId,
-                termSlug: termSlug,
-
-            },
-            success: function (response) {
-                console.log('Success: load_2images_Related works');
-                $('.related-images').html(response);
-            },
-            error: function (error) {
-                console.error('Error');
-            },
+                },
+                success: function (response) {
+                    console.log('Success: load_2images_Related works');
+                    $('.related-images').html(response);
+                },
+                error: function (error) {
+                    console.error('Error');
+                },
+            });
         });
-    });
+}
 
 
 function show_overlay_2images() {

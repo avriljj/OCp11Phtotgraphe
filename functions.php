@@ -69,6 +69,21 @@ function enqueue_custom_script() {
         'termSlug' => $term_slug
     ));
 
+    $total_posts = wp_count_posts()->publish;
+    $posts_per_page = get_option('posts_per_page');
+
+    // Calculate the total number of pages
+    $total_pages = max(1, ceil($total_posts / $posts_per_page));
+
+    // Get the current page
+    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
+
+    // Localize the data to pass it to the script
+    wp_localize_script('custom-script', 'customScriptData', array(
+        'totalPages' => $total_pages,
+        'currentPage' => $current_page,
+    ));
+
     $reference_field_value = get_post_meta($current_post_id, 'reference', true);
     wp_localize_script('custom-script', 'custom_vars', array('reference_value' => $reference_field_value));
 }
