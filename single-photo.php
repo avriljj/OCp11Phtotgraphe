@@ -105,28 +105,20 @@ if (!empty($taxonomies)) {
 }
 ?>
 
-<?php
-// single-photo.php
-
-// Check if the current page is a single post and has the category "photo"
-?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             // Call your custom function when the document is ready
             show_overlay_2images();
         });
     </script>
-    <?php
-
-// Rest of your single-photo.php template code goes here
-?>
 
 
 
 <div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
 
-<button>Toutes les photos</button>
 </div>
+
+<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="main-page-button">Toutes les photos</a>
 
             </article>
 

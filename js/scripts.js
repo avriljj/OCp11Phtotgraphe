@@ -1,3 +1,6 @@
+var imageTable;
+var dataTable;
+var hasMorePhotos = true;
 // thumbnail on previous and next article //
 
 $(document).ready(function($) {
@@ -28,6 +31,25 @@ $(document).ready(function($) {
 });
     
 
+// toggle button //
+
+// toggle the load more button //
+function toggleLoadMoreButton() {
+    $(document).ready(function ($) {
+        // $('#load-more-button').toggle(hasMorePhotos);
+         $('#load-more-button').on('click', function () {
+             // Update hasMorePhotos to false after the button is clicked
+             hasMorePhotos = false;
+     
+             // Toggle the visibility of the load-more-button based on the updated hasMorePhotos
+             $('#load-more-button').toggle(hasMorePhotos);
+         });
+    });
+    
+}
+
+toggleLoadMoreButton();
+   
 // // filters // load all  in filters //
 function loadAll() {
     $(document).ready(function ($) {
@@ -39,6 +61,9 @@ function loadAll() {
                 action: 'loadAll',
             },
             success: function(data) {
+
+                hasMorePhotos = false;
+                $('#load-more-button').toggle(hasMorePhotos);
                 console.log('loadAll success');
                 $('#posts-container').html(data);
             }
@@ -63,10 +88,15 @@ $(document).ready(function($) {
                 action: 'filter_posts_by_category',
                 category: selectedCategory
             },
-            success: function(data) {
+            success: function (data) {
+                hasMorePhotos = false;
+                $('#load-more-button').toggle(hasMorePhotos);
                 // Update the content area with the retrieved posts
                 console.log('works until data in category');
+                //$(dataTable) = data;
                 $('#posts-container').html(data);
+                dataTable = $('#posts-container').html(data);
+                show_all_overlay();
                 
             }
         });
@@ -88,10 +118,14 @@ $(document).ready(function($) {
                 action: 'filter_posts_by_format',
                 format: selectedFormat
             },
-            success: function(data) {
+            success: function (data) {
+                hasMorePhotos = false;
+                $('#load-more-button').toggle(hasMorePhotos);
                 // Update the content area with the retrieved posts
                 console.log('works until data format');
                 $('#posts-container').html(data);
+                dataTable = $('#posts-container').html(data);
+                show_all_overlay();
                 
             }
         });
@@ -113,9 +147,13 @@ $(document).ready(function ($) {
                 selectedDate: selectedDate,
             },
             success: function (response) {
+                hasMorePhotos = false;
+                $('#load-more-button').toggle(hasMorePhotos);
                 // Handle the response, e.g., update the content area with filtered posts
                 console.log('in the filter date');
                 $('#posts-container').html(response);
+                dataTable = $('#posts-container').html(data);
+                show_all_overlay();
                 
             },
         });
@@ -148,6 +186,8 @@ $(document).on('click', '#open-post', function (e) {
 });
 
 
+
+
 //overlay lightbox // ajax // //
 // show overlay for the first changed 12 photos//
 function show_overlay() {
@@ -163,7 +203,7 @@ function show_overlay() {
         
             var overlayLink = $(this).find('.overlay-link');
                
-                const ajaxurl = overlayLink.data('ajaxurl'); 
+               /* const ajaxurl = overlayLink.data('ajaxurl'); 
         
                 $.ajax({
                     url: ajaxurl,
@@ -171,17 +211,17 @@ function show_overlay() {
                     data: {
                         action: 'first_load_photos',
                     },
-                    success: function (data) {
+                    success: function (data) {*/
     
                         //console.log(data);
-                        overlayContainer = $(data);
+                        overlayContainer = $(dataTable);
     
-                        images = $(data).find('img:gt(0)');
+                        images = $(dataTable).find('img:gt(0)');
                         console.log(images);
                         
                         
                         if (images.length > 0) {
-                            images = $(data).find('img:gt(0)').filter(function() {
+                            images = $(dataTable).find('img:gt(0)').filter(function() {
                                 // Filter out images with no contents
                                 return $.trim($(this).attr('src')) !== '';
                             });
@@ -202,77 +242,78 @@ function show_overlay() {
     
                         }
                         
-                    }
+        //detail page //
+        $('#detail-page').on('click', function (e) {
+            e.preventDefault();
+            var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
+            var postURL = currentOverlayLink.attr('href');
+            console.log(postURL);
+        // Open the current post link
+            window.location.href = postURL;
+        });
+      
+        
+        // Previous button click
+        $('#prev-btn').on('click', function (e) {
+            e.preventDefault();
+            currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
+        });
+    
+        // Next button click
+        $('#next-btn').on('click', function (e) {
+            e.preventDefault();
+            currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
+        });
+    
+        // Close overlay
+        $('.overlay-close').on('click', function () {
+            $('#dynamic-overlay').hide();
+        });
+    
+        // Prevent overlay from closing when clicking on previous and next buttons
+        $('.overlay-prev, .overlay-next').on('click', function (e) {
+            e.stopPropagation();
+        });
+    
+        // Prevent overlay from closing when clicking outside of the image
+        $('#dynamic-overlay').on('click', function (e) {
+            if (!$(e.target).is('img')) {
+                e.stopPropagation();
+            }
+        });
+
+        
+        // Close overlay when clicking outside of the overlay
+        $('#dynamic-overlay').on('click', function (e) {
+            if (!$(e.target).is('img')) {
+                $('#dynamic-overlay').hide();
+            }
+        });
+    
+        // Function to update the image source
+        function updateImage(images, index, photoReference, categoryName) {
+            var imageUrl = $(images[index]).attr('src');
+            
+            $('#dynamic-image').attr('src', imageUrl);
+            $('.photo-reference').text(photoReference);
+            $('.category-name').text(categoryName);
+            $('#dynamic-overlay').show();
+        }
+                    //}
                 });
         
         
-            //detail page //
-            $('#detail-page').on('click', function (e) {
-                e.preventDefault();
-                var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
-                var postURL = currentOverlayLink.attr('href');
-                console.log(postURL);
-            // Open the current post link
-                window.location.href = postURL;
-            });
-          
             
-            // Previous button click
-            $('#prev-btn').on('click', function (e) {
-                e.preventDefault();
-                currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
-                var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-                var photoReference = prevOverlayLink.data('photo-reference');
-                var categoryName = prevOverlayLink.data('category-name');
-                updateImage(images, currentImageIndex, photoReference, categoryName);
-            });
-        
-            // Next button click
-            $('#next-btn').on('click', function (e) {
-                e.preventDefault();
-                currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
-                var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-                var photoReference = prevOverlayLink.data('photo-reference');
-                var categoryName = prevOverlayLink.data('category-name');
-                updateImage(images, currentImageIndex, photoReference, categoryName);
-            });
-        
-            // Close overlay
-            $('.overlay-close').on('click', function () {
-                $('#dynamic-overlay').hide();
-            });
-        
-            // Prevent overlay from closing when clicking on previous and next buttons
-            $('.overlay-prev, .overlay-next').on('click', function (e) {
-                e.stopPropagation();
-            });
-        
-            // Prevent overlay from closing when clicking outside of the image
-            $('#dynamic-overlay').on('click', function (e) {
-                if (!$(e.target).is('img')) {
-                    e.stopPropagation();
-                }
-            });
-    
-            
-            // Close overlay when clicking outside of the overlay
-            $('#dynamic-overlay').on('click', function (e) {
-                if (!$(e.target).is('img')) {
-                    $('#dynamic-overlay').hide();
-                }
-            });
-        
-            // Function to update the image source
-            function updateImage(images, index, photoReference, categoryName) {
-                var imageUrl = $(images[index]).attr('src');
-                
-                $('#dynamic-image').attr('src', imageUrl);
-                $('.photo-reference').text(photoReference);
-                $('.category-name').text(categoryName);
-                $('#dynamic-overlay').show();
-            }
         // Your code here
-    });
+   // });
 }
 
 //show_overlay();
@@ -290,7 +331,7 @@ function show_all_overlay() {
         
             var overlayLink = $(this).find('.overlay-link');
                
-                const ajaxurl = overlayLink.data('ajaxurl'); 
+                /*const ajaxurl = overlayLink.data('ajaxurl'); 
         
                 $.ajax({
                     url: ajaxurl,
@@ -298,17 +339,19 @@ function show_all_overlay() {
                     data: {
                         action: 'get_all_next_photos',
                     },
-                    success: function (data) {
+                    success: function (data) {*/
     
-                        overlayContainer = $(data);
+                        overlayContainer = $(dataTable);
     
-                        images = $(data).find('img:gt(0)');
+                        images = $(dataTable).find('img:gt(0)');
                         console.log(images);
                         
                         
                         if (images.length > 0) {
-                            images = $(data).find('img:gt(0)').filter(function() {
+                            images = $(dataTable).find('img:gt(0):not(:eq(1))').filter(function() {
                                 // Filter out images with no contents
+                                console.log('Image src:', $(this).attr('src'));
+
                                 return $.trim($(this).attr('src')) !== '';
                             });
     
@@ -327,79 +370,84 @@ function show_all_overlay() {
                             $('#dynamic-overlay').show();
     
                         }
+         //detail page //
+         $('#detail-page').on('click', function (e) {
+            e.preventDefault();
+            var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
+            var postURL = currentOverlayLink.attr('href');
+            console.log(postURL);
+        // Open the current post link
+            window.location.href = postURL;
+        });
+      
+        
+        // Previous button click
+        $('#prev-btn').on('click', function (e) {
+            e.preventDefault();
+            currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
+        });
+    
+        // Next button click
+        $('#next-btn').on('click', function (e) {
+            e.preventDefault();
+            currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
+            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = prevOverlayLink.data('photo-reference');
+            var categoryName = prevOverlayLink.data('category-name');
+            updateImage(images, currentImageIndex, photoReference, categoryName);
+        });
+    
+        // Close overlay
+        $('.overlay-close').on('click', function () {
+            $('#dynamic-overlay').hide();
+        });
+    
+        // Prevent overlay from closing when clicking on previous and next buttons
+        $('.overlay-prev, .overlay-next').on('click', function (e) {
+            e.stopPropagation();
+        });
+    
+        // Prevent overlay from closing when clicking outside of the image
+        $('#dynamic-overlay').on('click', function (e) {
+            if (!$(e.target).is('img')) {
+                e.stopPropagation();
+            }
+        });
+
+        
+        // Close overlay when clicking outside of the overlay
+        $('#dynamic-overlay').on('click', function (e) {
+            if (!$(e.target).is('img')) {
+                $('#dynamic-overlay').hide();
+            }
+        });
+    
+        // Function to update the image source
+        function updateImage(images, index, photoReference, categoryName) {
+            var imageUrl = $(images[index]).attr('src');
+            
+            $('#dynamic-image').attr('src', imageUrl);
+            $('.photo-reference').text(photoReference);
+            $('.category-name').text(categoryName);
+            $('#dynamic-overlay').show();
+        }
                         
-                    }
+                    //}
                 });
         
         
-            //detail page //
-            $('#detail-page').on('click', function (e) {
-                e.preventDefault();
-                var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
-                var postURL = currentOverlayLink.attr('href');
-                console.log(postURL);
-            // Open the current post link
-                window.location.href = postURL;
-            });
-          
-            
-            // Previous button click
-            $('#prev-btn').on('click', function (e) {
-                e.preventDefault();
-                currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
-                var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-                var photoReference = prevOverlayLink.data('photo-reference');
-                var categoryName = prevOverlayLink.data('category-name');
-                updateImage(images, currentImageIndex, photoReference, categoryName);
-            });
-        
-            // Next button click
-            $('#next-btn').on('click', function (e) {
-                e.preventDefault();
-                currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
-                var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-                var photoReference = prevOverlayLink.data('photo-reference');
-                var categoryName = prevOverlayLink.data('category-name');
-                updateImage(images, currentImageIndex, photoReference, categoryName);
-            });
-        
-            // Close overlay
-            $('.overlay-close').on('click', function () {
-                $('#dynamic-overlay').hide();
-            });
-        
-            // Prevent overlay from closing when clicking on previous and next buttons
-            $('.overlay-prev, .overlay-next').on('click', function (e) {
-                e.stopPropagation();
-            });
-        
-            // Prevent overlay from closing when clicking outside of the image
-            $('#dynamic-overlay').on('click', function (e) {
-                if (!$(e.target).is('img')) {
-                    e.stopPropagation();
-                }
-            });
-    
-            
-            // Close overlay when clicking outside of the overlay
-            $('#dynamic-overlay').on('click', function (e) {
-                if (!$(e.target).is('img')) {
-                    $('#dynamic-overlay').hide();
-                }
-            });
-        
-            // Function to update the image source
-            function updateImage(images, index, photoReference, categoryName) {
-                var imageUrl = $(images[index]).attr('src');
-                
-                $('#dynamic-image').attr('src', imageUrl);
-                $('.photo-reference').text(photoReference);
-                $('.category-name').text(categoryName);
-                $('#dynamic-overlay').show();
-            }
+           
         // Your code here
-    });
+   // });
 }
+
+
+
+
 
 // load more photos when click on load more images button append newly loaded images //
 $(document).ready(function ($) {
@@ -425,9 +473,16 @@ $(document).ready(function ($) {
                 page: page,
             },
             success: function (response) {
+
                 console.log('load the next photos success');
-                $('#posts-container').append(response);
+
+                
+                // Append the response to the dataTable
+                
+                dataTable = $('#posts-container').append(response);
+                console.log(dataTable);
                 show_all_overlay();
+                hasMorePhotos = false;
             },
             error: function (error) {
                 console.error('Error');
@@ -435,6 +490,9 @@ $(document).ready(function ($) {
         });
     });
 });
+
+
+
 
 
 // ajax for first time load the photos 12 first //
@@ -458,7 +516,8 @@ $(document).ready(function (){
             },
             success: function (response) {
                 console.log('Success: first_load_photos works');
-                $('#posts-container').append(response);
+                dataTable = response;
+                $('#posts-container').append(dataTable);
             },
             error: function (error) {
                 console.error('Error');
@@ -466,8 +525,11 @@ $(document).ready(function (){
         });
 });
 
-// load 2 images on single-photo page //
 
+
+
+
+// load 2 images on single-photo page //
 
 $(document).ready(function () {
 
@@ -634,4 +696,4 @@ function show_overlay_2images() {
         });
     }
     
-    show_overlay_2images();
+    // show_overlay_2images();

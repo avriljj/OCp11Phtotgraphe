@@ -26,7 +26,6 @@ function charger_mon_script() {
 add_action('wp_enqueue_scripts', 'charger_mon_script');
 
 
-
 function logo_setup() {
     add_theme_support('custom-logo', array(
         'height'      => 100,
@@ -64,9 +63,6 @@ function enqueue_custom_script() {
         echo 'No custom taxonomies found for pages.';
         return; // Stop execution if there are no custom taxonomies
     }
-
-    // Enqueue your script and localize it
-    wp_enqueue_script('custom-script', get_template_directory_uri() . '/path/to/your-script.js', array('jquery'), null, true);
 
     wp_localize_script('custom-script', 'php_vars', array(
         'postId'   => $current_post_id,
@@ -470,3 +466,6 @@ add_action('wp_ajax_load_2images_Related', 'load_2images_Related');
 add_action('wp_ajax_nopriv_load_2images_Related', 'load_2images_Related');
 
 
+
+
+//check if there's no more photos to be loaded //
