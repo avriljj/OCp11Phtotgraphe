@@ -111,7 +111,7 @@ if (!empty($taxonomies)) {
             // Call your custom function when the document is ready
             load2images();
             show_overlay_2images();
-            formFunction();
+            openForm();
             
         });
     </script>

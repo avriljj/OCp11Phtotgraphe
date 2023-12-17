@@ -66,10 +66,12 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
 <script type="text/javascript">
         jQuery(document).ready(function($) {
+
+            openFormFrontPage();
             // Call your custom function when the document is ready
             getFirstPhotos();
             show_overlay();
-            formFunction();
+            //openForm();
         });
     </script>
 
@@ -80,5 +82,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 <div>
 <button id="load-more-button" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">Load More Photos</button>
 </div>
+<div>
+<?php get_template_part('template-parts/content','contact');?></div>
 </div>
 <?php get_footer();
