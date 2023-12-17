@@ -6,6 +6,7 @@ var hasMorePhotos = true;
 $(document).ready(function($) {
         $('.alignleft a, .alignright a').hover(function() {
             var postURL = $(this).attr('href');
+            console.log(postURL);
             loadThumbnail(postURL);
         }, function() {
             removeThumbnail();
@@ -18,15 +19,19 @@ $(document).ready(function($) {
                 dataType: 'html',
                 success: function(response) {
                     var thumbnailURL;
-                    thumbnailURL = $(response).find('.entry-content img').attr('src');
+                    thumbnailURL = $(response).find('.photo-content img').attr('src');
+                    console.log(thumbnailURL);
 
-                    $('#thumbnail-container').html('<img width="100px" src="' + thumbnailURL + '" alt="Thumbnail">');
+                    $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px');
+
+
+                    //$('#thumbnail-container').html('<img width="100px" src="' + thumbnailURL + '" alt="Thumbnail">');
                 }
             });
         }
 
         function removeThumbnail() {
-            $('#thumbnail-container').empty();
+            $('#thumbnail-container img').empty();
         }
 });
     
@@ -278,8 +283,8 @@ function show_overlay() {
                     success: function (data) {*/
     
                         //console.log(data);
-                        overlayContainer = $(dataTable);
-    
+        overlayContainer = $(dataTable);
+        console.log(overlayContainer);
                         images = $(dataTable).find('img:gt(0)');
                         console.log(images);
                         
@@ -293,7 +298,7 @@ function show_overlay() {
                             var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
                             var photoReference = currentOverlayLink.data('photo-reference');
                             var categoryName = currentOverlayLink.data('category-name');
-                            console.log(images);
+                            //console.log(images);
                             console.log('bonjour');
                             console.log('photoReference:', photoReference);
                             console.log('categoryName:', categoryName);
@@ -584,6 +589,7 @@ function getFirstPhotos() {
                 console.log('Success: first_load_photos works');
                 dataTable = response;
                 $('#posts-container').append(dataTable);
+                //console.log(dataTable);
             },
             error: function (error) {
                 console.error('Error');

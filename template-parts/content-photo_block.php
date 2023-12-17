@@ -17,10 +17,10 @@ if (!empty($matches[0])) {
     echo ' data-photo-reference="' . esc_attr($photo_reference) . '"';
     echo ' data-category-name="' . esc_attr($category_name) . '"';
     echo '> ';
-    echo($category_name);
-    echo($photo_reference);
+    //echo($category_name);
+    //echo($photo_reference);
 
-    echo '<img src="" data-ajaxurl="' . esc_url(admin_url('admin-ajax.php')) . '">' . $matches[0][0] . '</img>';
+    echo '<img>' . $matches[0][0] ;
     
 
     // Add Font Awesome icons for full screen and sending to another page

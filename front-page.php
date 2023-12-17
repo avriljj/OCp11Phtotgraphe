@@ -26,8 +26,9 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 <form id="filter-form">
 <?php
 ?>
+<div class="category-div">
 <select name="filter-categorie" id="category-filter" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
-        <option value="all" selected>Catégories</option>
+        <option value="all" selected>CATEGORIES</option>
         <?php
         // Get a list of unique post dates
         $unique_categories = get_unique_post_categories();
@@ -39,7 +40,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
     </select>
 
     <select name="filter-format" id="filter-format" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
-        <option value="all" selected>Format</option>
+        <option value="all" selected>FORMAT</option>
         <?php
         // Get a list of unique post dates
         $unique_formats = get_unique_post_formats();
@@ -50,8 +51,12 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         ?>
     </select>
 
-    <select name="filter-date" id="filter-date" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
-        <option value="" selected>All Dates</option>
+</div>
+
+
+<div class="date-div">
+<select name="filter-date" id="filter-date" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
+        <option value="" selected>TRIER PAR</option>
         <?php
         // Get a list of unique post dates
         $unique_dates = get_unique_post_dates();
@@ -62,7 +67,10 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         ?>
     </select>
 
-</form>
+</div>
+    
+
+</form> <!-- end of forms -->
 
 <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -79,7 +87,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 </div>
 
 
-<div>
+<div id="load-more-button-div">
 <button id="load-more-button" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">Load More Photos</button>
 </div>
 <div>
