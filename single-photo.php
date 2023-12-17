@@ -57,13 +57,14 @@ if (!empty($date_field_value)) {?>
 <p>Année : <?php echo esc_html($date_field_value); ?></p>
  </div>
  <?php } ?>
-                </div>
+</div>
 
                 <div class="div-contact">
-                    <button class="btn-close">Contact</button>
+                    <button class="btn-close" id="contact-form-open">Contact</button>
                     <div class="form-contact"><?php get_template_part('template-parts/content','contact');?></div>
                 </div>
-                <div class="navigation">
+
+    <div class="navigation">
     <div class="alignleft" data-direction="previous"><?php previous_post_link('%link', '&laquo; Previous Post'); ?></div>
     <div class="alignright" data-direction="next"><?php next_post_link('%link', 'Next Post &raquo;'); ?></div>
     <div id="thumbnail-container"></div>
@@ -111,6 +112,7 @@ if (!empty($taxonomies)) {
             load2images();
             show_overlay_2images();
             formFunction();
+            
         });
     </script>
 

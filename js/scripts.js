@@ -184,7 +184,7 @@ $(document).ready(function ($) {
 
 
 //close btn of contact form toggle and get the reference //
-
+/*
 function formFunction() {
     $(document).ready(function(){
         $('.btn-close').on('click', function (event) {
@@ -197,7 +197,36 @@ function formFunction() {
     
     });
     
+}*/
+
+function openForm() {
+    $(document).ready(function () {
+
+        var referenceValue = custom_vars.reference_value;
+        $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
+    
+        
+        $('#menu-item-13').on('click', function (event) {
+            event.preventDefault();
+            console.log('clicked on the contact nav to open form');
+            $('#contact-form-overlay').css('display', 'flex');
+        });
+        $('#contact-form-open').on('click', function (event) {
+            //event.preventDefault();
+            console.log('clicked on the button open form');
+            $('#contact-form-overlay').css('display', 'flex');
+        });
+        $('#contact-form-overlay').on('click', function (e) {
+            // Check if the clicked element is not a descendant of the form
+            if (!$(e.target).closest('form').length) {
+                $('#contact-form-overlay').hide();
+            }
+        });
+        
+    });
 }
+openForm();
+
 // eye icon in photo_block when clicked //
 $(document).on('click', '#open-post', function (e) {
     e.preventDefault();

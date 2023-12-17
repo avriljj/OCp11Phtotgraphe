@@ -1,2 +1,3 @@
-<?php
-echo do_shortcode('[contact-form-7 id="45a1c3f" title="contact-form"]');
+<div id="contact-form-overlay">
+<?php echo do_shortcode('[contact-form-7 id="45a1c3f" title="contact-form"]'); ?>
+</div>
