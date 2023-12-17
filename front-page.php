@@ -69,6 +69,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
             // Call your custom function when the document is ready
             getFirstPhotos();
             show_overlay();
+            formFunction();
         });
     </script>
 

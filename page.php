@@ -13,4 +13,14 @@ while ( have_posts() ) :
 
 endwhile; // End of the loop.
 
+?>
+
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+        
+            formFunction();
+        });
+    </script>
+<?php
+
 get_footer();
