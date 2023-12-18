@@ -86,6 +86,10 @@ if (!empty($date_field_value)) {?>
 </div>
     
 </div>
+<div class="pre-divider">
+<div class="divider"></div>
+</div>
+
 
 
 
@@ -133,13 +137,13 @@ if (!empty($taxonomies)) {
         });
 </script>
 
-<div><p>Vous aimerez AUSSI</p></div>
+<div class="aime-aussi"><p>VOUS AIMEREZ AUSSI</p></div>
 
 <div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
 
 </div>
 
-<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="main-page-button">Toutes les photos</a>
+<a class="main-page-button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><button>Toutes les photos</button></a>
 
             </article>
 

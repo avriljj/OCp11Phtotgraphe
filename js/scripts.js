@@ -187,23 +187,7 @@ $(document).ready(function ($) {
 });
 
 
-
-//close btn of contact form toggle and get the reference //
-/*
-function formFunction() {
-    $(document).ready(function(){
-        $('.btn-close').on('click', function (event) {
-            event.preventDefault();
-            $('.form-contact').toggle();
-        });
-        // get the reference //
-        var referenceValue = custom_vars.reference_value;
-        $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
-    
-    });
-    
-}*/
-
+// form contact //
 function openForm() {
     $(document).ready(function () {
 
@@ -230,7 +214,7 @@ function openForm() {
         
     });
 }
-openForm();
+
 function openFormFrontPage() {
     $('#menu-item-13').on('click', function (event) {
         event.preventDefault();
@@ -260,15 +244,15 @@ $(document).on('click', '#open-post', function (e) {
 //overlay lightbox // ajax // //
 // show overlay for the first changed 12 photos//
 function show_overlay() {
-    $(document).on('click', '.post-container', function (e) {
+    $(document).on('click', '.fa-expand', function (e) {
         e.preventDefault();
         console.log('click works in post-container');
         var currentImageIndex;
         var images;
         var overlayContainer;
     
-        currentImageIndex = $('.post-container').index($(this));
-                console.log(currentImageIndex);
+        currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
+        console.log(currentImageIndex);
         
             var overlayLink = $(this).find('.overlay-link');
                
@@ -291,8 +275,9 @@ function show_overlay() {
                         
                         if (images.length > 0) {
                             images = $(dataTable).find('img:gt(0)').filter(function() {
-                                // Filter out images with no contents
-                                return $.trim($(this).attr('src')) !== '';
+                                var src = $.trim($(this).attr('src'));
+                                var id = $(this).attr('id');
+                                return src !== '';
                             });
     
                             var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
@@ -385,18 +370,16 @@ function show_overlay() {
    // });
 }
 
-//show_overlay();
-
 function show_all_overlay() {
-    $(document).on('click', '.post-container', function (e) {
+    $(document).on('click', '.fa-expand', function (e) {
         e.preventDefault();
         console.log('click works in post-container');
         var currentImageIndex;
         var images;
         var overlayContainer;
     
-        currentImageIndex = $('.post-container').index($(this));
-                console.log(currentImageIndex);
+        currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
+        console.log(currentImageIndex);
         
             var overlayLink = $(this).find('.overlay-link');
                
@@ -420,8 +403,9 @@ function show_all_overlay() {
                             images = $(dataTable).find('img:gt(0):not(:eq(1))').filter(function() {
                                 // Filter out images with no contents
                                 console.log('Image src:', $(this).attr('src'));
-
-                                return $.trim($(this).attr('src')) !== '';
+                                var src = $.trim($(this).attr('src'));
+                                var id = $(this).attr('id');
+                                return src !== '' && id !== 'previous-image';
                             });
     
                             var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);

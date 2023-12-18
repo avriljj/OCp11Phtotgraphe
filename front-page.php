@@ -1,6 +1,7 @@
 <?php get_header();?>
 
 <div class="hero">
+<img class="header-title"src="/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/images/header-title.png" alt="">
 <?php
 $args = array(  
     'post_type' => 'photo',
@@ -26,7 +27,8 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 <form id="filter-form">
 <?php
 ?>
-<div class="category-div">
+<div class="category-div ">
+    <div class="custom-select">
 <select name="filter-categorie" id="category-filter" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
         <option value="all" selected>CATEGORIES</option>
         <?php
@@ -38,7 +40,8 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         }
         ?>
     </select>
-
+    </div>
+    <div class="custom-select">
     <select name="filter-format" id="filter-format" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
         <option value="all" selected>FORMAT</option>
         <?php
@@ -50,11 +53,12 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         }
         ?>
     </select>
-
+    </div>
 </div>
 
 
 <div class="date-div">
+    <div class="custom-select">
 <select name="filter-date" id="filter-date" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
         <option value="" selected>TRIER PAR</option>
         <?php
@@ -66,7 +70,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
         }
         ?>
     </select>
-
+    </div>
 </div>
     
 

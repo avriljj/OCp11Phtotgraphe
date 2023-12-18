@@ -17,6 +17,8 @@
     
     body{
     font-family: 'Space Mono', monospace;
+    padding: 0;
+    margin: 0;
     }
     
 
@@ -96,8 +98,13 @@ z-index: 3;
 }
 
 #dynamic-image {
-max-width: 100%;
-max-height: 100%;
+position: absolute;
+bottom: 50px;
+left: 50%;
+transform: translate(-50%, 0);
+max-width: 564px;
+max-height: 495px;
+object-fit: cover;
 display: block;
 margin: auto;
 }
@@ -141,17 +148,37 @@ color: #fff;
 }
 .overlay-close{
 position: absolute;
-top: 300px;
-right: 500px;
-size: 100px;
-color: #fff;
+top: 50px;
+right: 100px;
+
+.fa-xmark{
+    font-size: 50px;
+    color: #fff;
+}
 }
 .photo-reference {
 position: absolute;
-top: 300px;
-right: 600px;
+bottom: 0;
+left: 500px;
 size: 100px;
 color: #fff;
+}
+.category-name{
+    position: absolute;
+    bottom: 0;
+    right: 500px;
+    color: #fff;
+    size: 100px;
+}
+//lightbox arrows//
+.fa-arrow-left-long , .fa-arrow-right-long, #prev-btn, #next-btn{
+    &:hover{
+        font-weight: bold;
+    }
+}
+
+a{
+    text-decoration: none;
 }
 
 // over image color black when hovered content-photo_block //
@@ -176,12 +203,32 @@ align-items: center;
 }
 
 .overlay i, .overlay a i, .overlay span{
-font-size: 60px;
+font-size: 40px;
 color: white;
 margin: 0 10px;
 }
 
-
+.fa-eye{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.fa-expand{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.photo-reference-photo-block{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.category-name-photo-block{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 .post-container:hover .overlay{
 opacity: 1;
 }
@@ -191,7 +238,36 @@ opacity: 1;
 }
 
 
+
 // form overlay //
+
+.wp-form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 14%;
+    input {
+        width: 263px;
+        border-radius: 5px;
+        border: solid 1px grey;
+    }
+    textarea{
+        width: 263px;
+        border-radius: 5px;
+        border: solid 1px grey;
+    }
+}
+
+.wp-form input[type="submit"] {
+    width: 263px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 1s, color 1s;
+        &:hover{
+            background-color: black;
+            color: #fff;
+        }
+}
 
 
 #contact-form-overlay {
@@ -205,15 +281,41 @@ opacity: 1;
     justify-content: center;
     align-items: center;
     z-index: 4;
+    //contact form header //
+
+.contact-header {
+    
+    max-width: 500px;
+    overflow: hidden;
+    z-index: 4;
+    position: relative;
+
+    &::before{
+        content: "";
+        background-image: url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/images/contact-header.png');
+        height: 106px;
+        width: 865px;
+        object-fit: cover;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+    }
+
+}
 }
 
 #contact-form-overlay form {
-    /* Add any additional styles for your form */
+    
     background: #fff;
     padding: 20px;
-    max-width: 400px; /* Adjust the maximum width as needed */
-    width: 100%;
+    padding-top: 160px;
+    width: 700px; 
+   
 }
+
+
 
 // single-photo page //
 // infos //
@@ -246,10 +348,25 @@ opacity: 1;
     margin: 0;
     gap: 0;
     width: 100vw;
+    height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
+    
 }
+
+.pre-divider{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 35px;
+    .divider{
+        width: 80vw;
+        border-bottom: solid 1px black;
+    }
+}
+
 .contact-sub-section {
     display: flex;
     flex-direction: row;
@@ -290,7 +407,32 @@ opacity: 1;
     text-decoration: none;
 }
 
+.div-contact {
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    #contact-form-open{
+        width: 272px;
+        height: 50px;
+        border: none;
+        transition: background-color 1s, color 1s;
+        &:hover{
+            background-color: black;
+            color: #fff;
+        }
+        
+    }
+}
+
 //related images //
+
+.aime-aussi {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding: 20px 10vw;
+}
 
 .related-images{
     width: 100vw;
@@ -314,21 +456,45 @@ opacity: 1;
 //more images button //
 
 .main-page-button{
+    margin: 50px 0;
     display: flex;
     justify-content: center;
+    text-decoration: none;
+    button{
+        width: 272px;
+        height: 50px;
+        border: none;
+        transition: background-color 1s, color 1s;
+        &:hover{
+            background-color: black;
+            color: #fff;
+        }
+    }
 }
 
 /// front page ///
-// hero image//
+// hero image content//
 
 .hero{
     width: 100vw;
     height: 100vh;
-    img{
-        width: 100vw !important;
-        height: 100vh !important;
-        object-fit: cover;
+    figure {
+        img{
+            width: 100vw !important;
+            height: 100vh !important;
+            object-fit: cover;
+        }
     }
+    
+}
+//hero image title//
+
+.header-title{
+    position: absolute;
+    max-width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 #posts-container{
@@ -355,6 +521,17 @@ opacity: 1;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 50px 0;
+    button{
+        width: 272px;
+        height: 50px;
+        border: none;
+        transition: background-color 1s, color 1s;
+        &:hover{
+            background-color: black;
+            color: #fff;
+        }
+    }
 }
 
 //search form filters //
@@ -385,4 +562,13 @@ select{
     margin-top: 80px;
     margin-bottom: 40px;
     border-radius: 10px;
+    background-color: pink;
+    option{
+        color: aqua;
+        &:hover{
+            background-color: green;
+            color: #fff;
+        }
+    }
 }
+

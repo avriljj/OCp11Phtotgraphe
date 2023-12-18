@@ -25,7 +25,7 @@ if (!empty($matches[0])) {
 
     // Add Font Awesome icons for full screen and sending to another page
     echo '<div class="overlay">';
-    echo '<a id="open-post" href="' . esc_url(get_permalink()) . '"><i class="fas fa-eye"></i></a>'; 
+    echo '<a id="open-post" href="' . esc_url(get_permalink()) . '"><i class="fa-solid fa-eye"></i></a>'; 
     echo '<i class="fa-solid fa-expand"></i>'; // Full screen icon
     echo '<span class="photo-reference-photo-block">' . esc_html($photo_reference) . '</span>';
     echo '<span class="category-name-photo-block">' . esc_html($category_name) . '</span>';
@@ -36,17 +36,12 @@ if (!empty($matches[0])) {
 <!-- Structure de la lightbox -->
 
 <div class="overlay-container" id="dynamic-overlay">
-        <span class="overlay-close">&times;</span>
+        <a class="overlay-close"><i class="fa-solid fa-xmark"></i></a>
         <img id="dynamic-image" src="" alt="Dynamic Image">
-        <div class="icon-container">
-            <a id="full-screen" href="#" class="full-screen-icon"><i class="fa-solid fa-expand"></i></a>
-            <a id="detail-page" href="<?php echo get_permalink(); ?>" class="send-to-page-icon"><i class="fa-solid fa-eye"></i></a>
-
-        </div>
         
 
-        <a href="#" class="overlay-prev" id="prev-btn">&lt; Previous</a>
-        <a href="#" class="overlay-next" id="next-btn">Next &gt;</a>
+        <a href="#" class="overlay-prev" id="prev-btn"><i class="fa-solid fa-arrow-left-long"></i> Précédente</a>
+        <a href="#" class="overlay-next" id="next-btn">Suivante <i class="fa-solid fa-arrow-right-long"></i></a>
         <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>
         <span class="category-name"><?php echo esc_html($category_name)?></span>
     </div>
