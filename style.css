@@ -87,6 +87,7 @@ body.page article .entry-content {
 }
 .footer ul li a {
   text-decoration: none;
+  color: black;
 }
 
 #dynamic-overlay {
