@@ -16,9 +16,33 @@ body {
   margin: 0;
 }
 
+/* Apply CSS only on pages */
+body.page article {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+body.page article .entry-content {
+  width: 70%;
+}
+
 #logo img.custom-logo {
   width: 216px;
   height: 14px;
+}
+
+.icon-header {
+  display: none;
+}
+.icon-header .fa-xmark {
+  display: none;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav {
@@ -33,6 +57,7 @@ body {
 #menu-main-menu {
   display: flex;
   flex-direction: row;
+  padding-right: 100px;
 }
 #menu-main-menu li {
   padding-left: 30px;
@@ -42,6 +67,10 @@ body {
   text-decoration: none;
   color: black;
   size: 16px;
+}
+
+.fa-bars {
+  display: none;
 }
 
 .footer ul {
@@ -112,7 +141,7 @@ body {
 .overlay-prev {
   position: absolute;
   top: 500px;
-  left: 200px;
+  left: 10%;
   size: 60px;
   color: #fff;
 }
@@ -120,17 +149,19 @@ body {
 .overlay-next {
   position: absolute;
   top: 500px;
-  right: 200px;
+  right: 10%;
   size: 60px;
   color: #fff;
 }
 
 .overlay-close {
   position: absolute;
-  top: 50px;
-  right: 100px;
+  top: 100px;
+  right: 20%;
+  width: 50px;
+  height: 50px;
 }
-.overlay-close .fa-xmark {
+.overlay-close i {
   font-size: 50px;
   color: #fff;
 }
@@ -138,7 +169,7 @@ body {
 .photo-reference {
   position: absolute;
   bottom: 0;
-  left: 500px;
+  left: 30%;
   size: 100px;
   color: #fff;
 }
@@ -146,7 +177,7 @@ body {
 .category-name {
   position: absolute;
   bottom: 0;
-  right: 500px;
+  right: 30%;
   color: #fff;
   size: 100px;
 }
@@ -283,6 +314,12 @@ a {
   width: 700px;
 }
 
+.entry-header {
+  width: 420px;
+  font-size: 30px;
+  font-style: italic;
+}
+
 .infos {
   width: 100vw;
   display: flex;
@@ -302,6 +339,11 @@ a {
   justify-content: end;
   margin-bottom: 17px;
   border-bottom: solid 1px black;
+}
+
+.pre-divider-top .divider-top {
+  width: 0;
+  border-bottom: none;
 }
 
 .contact-section {
@@ -501,7 +543,7 @@ select {
   margin-top: 80px;
   margin-bottom: 40px;
   border-radius: 10px;
-  background-color: pink;
+  background-color: white;
 }
 select option {
   color: aqua;
@@ -509,6 +551,283 @@ select option {
 select option:hover {
   background-color: green;
   color: #fff;
+}
+
+.fa-xmark {
+  display: none;
+}
+
+@media (max-width: 950px) {
+  body {
+    width: 100vw;
+  }
+  p {
+    font-size: 10px;
+  }
+  a {
+    font-size: 10px;
+  }
+  .footer ul {
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer ul li {
+    padding: 10px 0;
+    font-size: 10px;
+  }
+  .footer ul li a {
+    color: black;
+  }
+  .nav-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+  .nav-container .nav-menu {
+    background-color: red;
+    display: none;
+    flex-direction: column;
+    height: 812px;
+    width: 100vw;
+    align-items: center;
+  }
+  .nav-container .nav-menu .menu-main-menu-container {
+    height: 100%;
+  }
+  .nav-container .nav-menu .menu-main-menu-container #menu-main-menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-container .nav-menu .menu-main-menu-container #menu-main-menu li {
+    padding: 20px 0;
+  }
+  .nav-container .nav-menu .menu-main-menu-container #menu-main-menu li a {
+    font-size: 60px;
+    color: #fff;
+  }
+  .icons-header {
+    display: block;
+    position: absolute !important;
+    top: 20px;
+    right: 5%;
+  }
+  #menu-main-menu {
+    display: flex;
+    flex-direction: column;
+    display: none;
+  }
+  .icons-header .fa-bars {
+    display: flex;
+    font-size: 30px;
+  }
+  .icons-header .fa-xmark {
+    display: none;
+    font-size: 30px;
+  }
+  #filter-form {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Adjusted justify-content */
+    overflow-x: auto;
+  }
+  #filter-form .category-div {
+    width: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Adjusted justify-content for .category-div */
+  }
+  #filter-form .category-div .custom-select #filter-format {
+    margin-left: 50px;
+  }
+  #filter-form .date-div {
+    position: relative;
+    width: 0;
+    display: block;
+  }
+  #filter-form .date-div #filter-date {
+    margin-left: 200px;
+  }
+  #contact-form-overlay form {
+    background: #fff;
+    padding: 20px;
+    padding-top: 160px;
+    width: 400px;
+  }
+  #posts-container {
+    width: 100vw !important;
+  }
+  #posts-container .post-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #posts-container .post-container .overlay-link {
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #posts-container .post-container .overlay-link img:nth-child(2) {
+    width: 317px !important;
+    height: 278px !important;
+    object-fit: cover;
+  }
+  .post-container {
+    position: relative;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .post-container .overlay {
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 317px;
+    height: 278px;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay i, .overlay a i, .overlay span {
+    font-size: 20px;
+    color: white;
+    margin: 0 10px;
+  }
+  .fa-eye {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .fa-expand {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .photo-reference-photo-block {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .category-name-photo-block {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  .post-container:hover .overlay {
+    opacity: 1;
+  }
+  .overlay-container:hover .overlay {
+    opacity: 1;
+  }
+  .hero {
+    position: relative;
+    height: 253px !important;
+    width: 100vw !important;
+  }
+  .hero .header-title {
+    position: absolute;
+    max-width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .hero figure img {
+    height: 253px !important;
+    width: 100vw !important;
+    object-fit: cover;
+  }
+  .photo-content {
+    order: -1;
+    width: 265px;
+    height: auto;
+  }
+  .infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .infos .infos-text {
+    width: 265px;
+    margin: 0;
+    border-bottom: none;
+  }
+  .infos .infos-text .entry-header .entry-title {
+    font-size: 30px;
+  }
+  .infos .infos-text .your-custom-container {
+    font-size: 15px;
+  }
+  .contact-section {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .contact-section .contact-sub-section {
+    width: 265px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pre-divider-top .divider-top {
+    width: 100vw;
+    border-bottom: solid 1px black;
+  }
+  .pre-divider .divider {
+    width: 100vw;
+    border-bottom: solid 1px black;
+  }
+  .aime-aussi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .related-images {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  .related-images .post-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .related-images .post-container .overlay-link {
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .related-images .post-container .overlay-link img:nth-child(2) {
+    width: 317px !important;
+    height: 278px !important;
+    object-fit: cover;
+  }
+  .navgation-container {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

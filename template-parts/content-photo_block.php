@@ -36,7 +36,7 @@ if (!empty($matches[0])) {
 <!-- Structure de la lightbox -->
 
 <div class="overlay-container" id="dynamic-overlay">
-        <a class="overlay-close"><i class="fa-solid fa-xmark"></i></a>
+        <a class="overlay-close"><i class="fas fa-times"></i></a>
         <img id="dynamic-image" src="" alt="Dynamic Image">
         
 

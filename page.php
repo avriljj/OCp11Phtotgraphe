@@ -6,19 +6,20 @@
 
 get_header();
 
-/* Start the Loop */
+
 while ( have_posts() ) :
 	the_post();
 	get_template_part( 'template-parts/content','page' );
 
-endwhile; // End of the loop.
+endwhile; 
 
 ?>
+<div class="form-contact"><?php get_template_part('template-parts/content','contact');?></div>
 
 <script type="text/javascript">
         jQuery(document).ready(function($) {
         
-            formFunction();
+            openFormFrontPage();
         });
     </script>
 <?php

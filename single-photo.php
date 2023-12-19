@@ -65,6 +65,10 @@ if (!empty($date_field_value)) {?>
 </div>  
 </div> <!-- end if infos -->
 
+<div class="pre-divider-top">
+<div class="divider-top"></div>
+</div>
+
     <div class="contact-section">
         <div class="contact-sub-section">
         <div><p>Cette photo vous intéresse ?</p></div>
@@ -139,9 +143,7 @@ if (!empty($taxonomies)) {
 
 <div class="aime-aussi"><p>VOUS AIMEREZ AUSSI</p></div>
 
-<div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
-
-</div>
+<div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>"></div>
 
 <a class="main-page-button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><button>Toutes les photos</button></a>
 

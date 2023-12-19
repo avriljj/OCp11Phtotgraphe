@@ -12,12 +12,17 @@
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<div class="nav-container">
 <div class="nav">
-<div id="logo">
-    <?php the_custom_logo(); ?>
+<div id="logo"><?php the_custom_logo(); ?></div>
 </div>
 
-	<?php wp_nav_menu( array(
+<div class="icons-header">
+<i class="fa-solid fa-bars"></i>
+<i class="fa-solid fa-xmark"></i>
+</div>
+<div class="nav-menu"><?php wp_nav_menu( array(
     'main menu' => 'primary',
-) ); ?>
+) ); ?></div>
+
 </div>

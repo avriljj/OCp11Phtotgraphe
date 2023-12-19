@@ -755,4 +755,40 @@ function show_overlay_2images() {
         });
     }
     
-    // show_overlay_2images();
+// show_overlay_2images();
+    
+
+// when click on hamburger //
+
+function header() {
+
+    $(document).ready(function () {
+    
+        $(".icons-header").on("click", function (e) {
+            e.preventDefault();
+            if (window.innerWidth < 950) {
+                console.log('icons clicked.');
+                $(".fa-bars, .fa-xmark").toggle();
+                $(".nav-menu").slideToggle();
+            }
+            if (window.innerWidth >= 950) {
+                console.log('icons clicked.');
+                $(".fa-bars, .fa-xmark").css('display','none');
+                
+            }
+
+            $(window).resize(function() {
+                if (window.innerWidth >= 950) {
+                    $(".fa-bars").hide();
+                    $(".fa-xmark").hide();
+                } else {
+                    $(".fa-bars").show();
+                    $(".fa-xmark").hide();
+                }
+            });
+        });
+    });
+    
+}
+
+header();
