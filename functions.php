@@ -1,24 +1,49 @@
 <?php 
-function charger_mon_script() {
+function charger() {
 
-    $total_pages = wp_count_posts('photo')->publish;
-    //$posts_per_page = get_option('posts_per_page');
+    // Define variables
+    $total_posts = wp_count_posts('photo')->publish;
     $posts_per_page = 12;
-
-    echo $total_pages;
-    echo $posts_per_page;
-    // Calculate the total number of pages
     $total_pages = max(1, ceil($total_posts / $posts_per_page));
-
-    // Get the current page
     $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 
-    echo 'look at here';
-    
-    wp_localize_script('custom-script', 'pages_vars', array( 
+    // Localize the script with data
+    wp_localize_script('custom-script', 'pages_vars', array(
         'totalPages' => $total_pages,
         'currentPage' => $current_page
     ));
+   
+   // Définissez le chemin vers votre script
+   $script_url = get_template_directory_uri() . '/js/scripts.js';
+
+   // Générez une version unique en utilisant la date actuelle pour éviter la mise en cache
+   $version = date('YmdHis');
+
+   wp_enqueue_style('custom-style', get_template_directory_uri() . '/style.css', array(), $version, 'all');
+   // Enregistrez le script avec la version
+   wp_enqueue_script('custom-script', $script_url, array('jquery'), $version, true);
+   wp_enqueue_script('jquery');
+
+   // Assurez-vous que jQuery est en mode non-conflict
+   wp_script_add_data('jquery', 'group', 1);
+   wp_script_add_data('jquery', 'version', $version);
+}
+
+add_action('wp_enqueue_scripts', 'charger');
+
+function charger_mon_script() {
+
+     // Define variables
+     $total_posts = wp_count_posts('photo')->publish;
+     $posts_per_page = 12;
+     $total_pages = max(1, ceil($total_posts / $posts_per_page));
+     $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
+ 
+     // Localize the script with data
+     wp_localize_script('custom-script', 'pages_vars', array(
+         'totalPages' => $total_pages,
+         'currentPage' => $current_page
+     ));
     
     // Définissez le chemin vers votre script
     $script_url = get_template_directory_uri() . '/js/scripts.js';
