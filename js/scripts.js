@@ -36,45 +36,7 @@ $(document).ready(function($) {
 });
     
 
-// toggle button //
 
-function hasMorePhotosFunc() {
-    $(document).ready(function() {
-        // Get the total number of pages and the current page from localized data
-        var totalPages = customScriptData.totalPages;
-        var currentPage = customScriptData.currentPage;
-    
-        // Check if the current page is equal to the total number of pages
-        if (currentPage >= totalPages) {
-            // Do something if the current page is the last page
-            console.log('Current page is the last page');
-            // For example, you might want to return false in this case
-            return hasMorePhotos = false;
-            
-            
-        }
-        return hasMorePhotos = true;;
-    });
-}
-
-
-
-// toggle the load more button //
-function toggleLoadMoreButton() {
-    $(document).ready(function ($) {
-        // $('#load-more-button').toggle(hasMorePhotos);
-         $('#load-more-button').on('click', function () {
-             // Update hasMorePhotos to false after the button is clicked
-             hasMorePhotos = hasMorePhotosFunc();
-     
-             // Toggle the visibility of the load-more-button based on the updated hasMorePhotos
-             $('#load-more-button').toggle(hasMorePhotos);
-         });
-    });
-    
-}
-
-toggleLoadMoreButton();
    
 // // filters // load all  in filters //
 function loadAll() {
@@ -383,15 +345,6 @@ function show_all_overlay() {
         
             var overlayLink = $(this).find('.overlay-link');
                
-                /*const ajaxurl = overlayLink.data('ajaxurl'); 
-        
-                $.ajax({
-                    url: ajaxurl,
-                    method: 'POST',
-                    data: {
-                        action: 'get_all_next_photos',
-                    },
-                    success: function (data) {*/
     
                         overlayContainer = $(dataTable);
     
@@ -505,9 +458,11 @@ function show_all_overlay() {
 // load more photos when click on load more images button append newly loaded images //
 $(document).ready(function ($) {
     var page = 2;
+    
+    console.log(page);
     $('#load-more-button').on('click', function (e) {
         e.preventDefault(); // Prevent the default behavior of the link
-
+        
         const ajaxurl = $(this).data('ajaxurl');
 
         if (!ajaxurl) {
@@ -528,7 +483,7 @@ $(document).ready(function ($) {
             success: function (response) {
 
                 console.log('load the next photos success');
-
+                page++;
                 
                 // Append the response to the dataTable
                 
@@ -792,3 +747,50 @@ function header() {
 }
 
 header();
+
+
+
+// toggle button //
+
+// check if theres more photos to load //
+
+function hasMorePhotosFunc() {
+    $(document).ready(function () {
+        var total = pages_vars.totalPages;
+        var current = pages_vars.currentPage;
+        // Get the total number of pages and the current page from localized data
+       
+        console.log('hasmorebutton clicked');
+        console.log(total);
+        console.log(current);
+    
+        // Check if the current page is equal to the total number of pages
+        if (current >= total) {
+            // Do something if the current page is the last page
+            console.log('Current page is the last page');
+            // For example, you might want to return false in this case
+            return hasMorePhotos = false;
+            
+            
+        }
+        return hasMorePhotos = true;;
+    });
+}
+
+
+// toggle the load more button //
+
+function toggleLoadMoreButton() {
+    $(document).ready(function ($) {
+
+
+        // $('#load-more-button').toggle(hasMorePhotos);
+        $('#load-more-button').on('click', function () {
+             hasMorePhotos = hasMorePhotosFunc();
+             $('#load-more-button').toggle(hasMorePhotos);
+         });
+    });
+    
+}
+toggleLoadMoreButton();
+

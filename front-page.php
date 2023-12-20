@@ -79,11 +79,11 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 <script type="text/javascript">
         jQuery(document).ready(function($) {
 
+            
             openFormFrontPage();
-            // Call your custom function when the document is ready
             getFirstPhotos();
             show_overlay();
-            //openForm();
+            
         });
     </script>
 

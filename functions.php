@@ -1,12 +1,25 @@
 <?php 
-register_nav_menus(
-			array(
-				'primary' => esc_html__( 'Primary menu', 'mytheme' ),
-				'footer'  => esc_html__( 'Footer menu', 'mytheme' ),
-			)
-		);
-
 function charger_mon_script() {
+
+    $total_pages = wp_count_posts('photo')->publish;
+    //$posts_per_page = get_option('posts_per_page');
+    $posts_per_page = 12;
+
+    echo $total_pages;
+    echo $posts_per_page;
+    // Calculate the total number of pages
+    $total_pages = max(1, ceil($total_posts / $posts_per_page));
+
+    // Get the current page
+    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
+
+    echo 'look at here';
+    
+    wp_localize_script('custom-script', 'pages_vars', array( 
+        'totalPages' => $total_pages,
+        'currentPage' => $current_page
+    ));
+    
     // Définissez le chemin vers votre script
     $script_url = get_template_directory_uri() . '/js/scripts.js';
 
@@ -26,6 +39,16 @@ function charger_mon_script() {
 add_action('wp_enqueue_scripts', 'charger_mon_script');
 
 
+register_nav_menus(
+			array(
+				'primary' => esc_html__( 'Primary menu', 'mytheme' ),
+				'footer'  => esc_html__( 'Footer menu', 'mytheme' ),
+			)
+		);
+
+
+
+
 function logo_setup() {
     add_theme_support('custom-logo', array(
         'height'      => 100,
@@ -35,6 +58,10 @@ function logo_setup() {
     ));
 }
 add_action('after_setup_theme', 'logo_setup');
+
+
+
+// custom vars //
 
 
 function enqueue_custom_script() {
@@ -68,27 +95,16 @@ function enqueue_custom_script() {
         'postId'   => $current_post_id,
         'termSlug' => $term_slug
     ));
-
-    $total_posts = wp_count_posts()->publish;
-    $posts_per_page = get_option('posts_per_page');
-
-    // Calculate the total number of pages
-    $total_pages = max(1, ceil($total_posts / $posts_per_page));
-
-    // Get the current page
-    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
-
-    // Localize the data to pass it to the script
-    wp_localize_script('custom-script', 'customScriptData', array(
-        'totalPages' => $total_pages,
-        'currentPage' => $current_page,
+    
+    $reference_field_value = get_post_meta($current_post_id, 'reference', true);
+    
+    wp_localize_script('custom-script', 'custom_vars', array(
+        'reference_value' => $reference_field_value
     ));
 
-    $reference_field_value = get_post_meta($current_post_id, 'reference', true);
-    wp_localize_script('custom-script', 'custom_vars', array('reference_value' => $reference_field_value));
 }
-add_action('wp_enqueue_scripts', 'enqueue_custom_script');
 
+add_action('wp_enqueue_scripts', 'enqueue_custom_script');
 
 // get dates for filters form //
 
@@ -387,35 +403,6 @@ function load_more_photos() {
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 
-// get the next page of 12 photos //
-
-function get_all_next_photos() {
-   // $posts = array();
-    $args = array(
-        'post_type'      => 'photo',
-        'post_status'    => 'publish',
-        'posts_per_page' => -1, // Get all posts
-    );
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            get_template_part('template-parts/content', 'photo_block');
-            
-        }
-    }
-
-    // Reset post data
-    wp_reset_postdata();
-
-    die();
-    //return $posts;
-}
-
-add_action('wp_ajax_get_all_next_photos', 'get_all_next_photos');
-add_action('wp_ajax_nopriv_get_all_next_photos', 'get_all_next_photos');
 
 
 function first_load_photos() {
@@ -483,4 +470,3 @@ add_action('wp_ajax_nopriv_load_2images_Related', 'load_2images_Related');
 
 
 
-//check if there's no more photos to be loaded //

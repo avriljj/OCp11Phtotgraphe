@@ -134,9 +134,11 @@ if (!empty($taxonomies)) {
 <script type="text/javascript">
         jQuery(document).ready(function($) {
             // Call your custom function when the document is ready
+            openFormFrontPage();
             load2images();
             show_overlay_2images();
             openForm();
+            //hasMorePhotosFunc();
             
         });
 </script>
