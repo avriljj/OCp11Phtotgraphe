@@ -1,8 +1,6 @@
-var imageTable;
 var dataTable;
 var hasMorePhotos = true;
 // thumbnail on previous and next article //
-
 $(document).ready(function($) {
         $('.alignleft a, .alignright a').hover(function() {
             var postURL = $(this).attr('href');
@@ -37,7 +35,6 @@ $(document).ready(function($) {
     
 
 //if user logged in change the height of the hamburger //
-
 $(document).ready(function($) {
     // Check if the user is logged in
     if (loggedInStatus.loggedIn) {
@@ -96,7 +93,6 @@ $(document).ready(function($) {
                 $('#load-more-button').toggle(hasMorePhotos);
                 // Update the content area with the retrieved posts
                 console.log('works until data in category');
-                //$(dataTable) = data;
                 $('#posts-container').html(data);
                 dataTable = $('#posts-container').html(data);
                 show_all_overlay();
@@ -144,7 +140,7 @@ $(document).ready(function ($) {
         // Make AJAX request
         $.ajax({
             type: 'POST',
-            url: ajaxurl, // WordPress AJAX handler
+            url: ajaxurl, 
             data: {
                 action: 'filter_posts',
                 selectedDate: selectedDate,
@@ -152,7 +148,7 @@ $(document).ready(function ($) {
             success: function (response) {
                 hasMorePhotos = false;
                 $('#load-more-button').toggle(hasMorePhotos);
-                // Handle the response, e.g., update the content area with filtered posts
+                
                 console.log('in the filter date');
                 $('#posts-container').html(response);
                 dataTable = $('#posts-container').html(response);
@@ -209,13 +205,10 @@ function openFormFrontPage() {
 $(document).on('click', '#open-post', function (e) {
     e.preventDefault();
     var postURL = $(this).closest('.overlay-link').attr('href');
-    console.log(postURL);
 
     // Open the current post link
     window.location.href = postURL;
 });
-
-
 
 
 //overlay lightbox // ajax // //
@@ -229,21 +222,7 @@ function show_overlay() {
         var overlayContainer;
     
         currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
-        console.log(currentImageIndex);
-        
-            var overlayLink = $(this).find('.overlay-link');
                
-               /* const ajaxurl = overlayLink.data('ajaxurl'); 
-        
-                $.ajax({
-                    url: ajaxurl,
-                    method: 'POST',
-                    data: {
-                        action: 'first_load_photos',
-                    },
-                    success: function (data) {*/
-    
-                        //console.log(data);
         overlayContainer = $(dataTable);
         console.log(overlayContainer);
                         images = $(dataTable).find('img:gt(0)');
@@ -260,7 +239,7 @@ function show_overlay() {
                             var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
                             var photoReference = currentOverlayLink.data('photo-reference');
                             var categoryName = currentOverlayLink.data('category-name');
-                            //console.log(images);
+                            
                             console.log('bonjour');
                             console.log('photoReference:', photoReference);
                             console.log('categoryName:', categoryName);
@@ -456,14 +435,8 @@ function show_all_overlay() {
             $('.category-name').text(categoryName);
             $('#dynamic-overlay').show();
         }
-                        
-                    //}
                 });
-        
-        
-           
-        // Your code here
-   // });
+
 }
 
 
@@ -721,11 +694,8 @@ function show_overlay_2images() {
                     $('.category-name').text(categoryName);
                     $('#dynamic-overlay').show();
                 }
-            // Your code here
         });
     }
-    
-// show_overlay_2images();
     
 
 // when click on hamburger //
@@ -766,7 +736,6 @@ header();
 
 
 // toggle button //
-
 // check if theres more photos to load //
 
 function hasMorePhotosFunc() {
@@ -794,7 +763,6 @@ function hasMorePhotosFunc() {
 
 
 // toggle the load more button //
-
 function toggleLoadMoreButton() {
     $(document).ready(function ($) {
 
