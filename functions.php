@@ -1,17 +1,7 @@
 <?php 
-function charger() {
 
-    // Define variables
-    $total_posts = wp_count_posts('photo')->publish;
-    $posts_per_page = 12;
-    $total_pages = max(1, ceil($total_posts / $posts_per_page));
-    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
-
-    // Localize the script with data
-    wp_localize_script('custom-script', 'pages_vars', array(
-        'totalPages' => $total_pages,
-        'currentPage' => $current_page
-    ));
+// charger scripts
+function charger_script() {
    
    // Définissez le chemin vers votre script
    $script_url = get_template_directory_uri() . '/js/scripts.js';
@@ -29,9 +19,17 @@ function charger() {
    wp_script_add_data('jquery', 'version', $version);
 }
 
-add_action('wp_enqueue_scripts', 'charger');
+add_action('wp_enqueue_scripts', 'charger_script');
 
+
+//custom vars   // Pass PHP value to script
 function charger_mon_script() {
+
+     // Pass the login status to the script
+     wp_localize_script('custom-script', 'loggedInStatus', array(
+        'loggedIn' => is_user_logged_in()
+    ));
+
 
      // Define variables
      $total_posts = wp_count_posts('photo')->publish;
@@ -44,67 +42,27 @@ function charger_mon_script() {
          'totalPages' => $total_pages,
          'currentPage' => $current_page
      ));
-    
-    // Définissez le chemin vers votre script
-    $script_url = get_template_directory_uri() . '/js/scripts.js';
 
-    // Générez une version unique en utilisant la date actuelle pour éviter la mise en cache
-    $version = date('YmdHis');
-
-    wp_enqueue_style('custom-style', get_template_directory_uri() . '/style.css', array(), $version, 'all');
-    // Enregistrez le script avec la version
-    wp_enqueue_script('custom-script', $script_url, array('jquery'), $version, true);
-    wp_enqueue_script('jquery');
-
-    // Assurez-vous que jQuery est en mode non-conflict
-    wp_script_add_data('jquery', 'group', 1);
-    wp_script_add_data('jquery', 'version', $version);
-}
-
-add_action('wp_enqueue_scripts', 'charger_mon_script');
-
-
-register_nav_menus(
-			array(
-				'primary' => esc_html__( 'Primary menu', 'mytheme' ),
-				'footer'  => esc_html__( 'Footer menu', 'mytheme' ),
-			)
-		);
-
-
-
-
-function logo_setup() {
-    add_theme_support('custom-logo', array(
-        'height'      => 100,
-        'width'       => 200,
-        'flex-height' => true,
-        'flex-width'  => true,
-    ));
-}
-add_action('after_setup_theme', 'logo_setup');
-
-
-
-// custom vars //
-
-
-function enqueue_custom_script() {
-
-    // Pass PHP value to script
+       
     $current_post_id = get_the_ID();
+    // returns category and format
     $taxonomies = get_object_taxonomies('photo', 'names');
     
     if (!empty($taxonomies)) {
+
+        // choose category and not format
         $taxonomy_slug = $taxonomies[0];
     
-        // Get the terms (categories) associated with the current page in the custom taxonomy
+        // Get the terms (categories) associated with the current page in the custom taxonomy 
+        // get all the terms of the current post's categorie
         $terms = get_the_terms($current_post_id, $taxonomy_slug);
         
         // Check if there are terms
         if (!empty($terms)) {
-            // Assuming you want to use the first term assigned to the page
+            // Assuming you want to use the first term assigned to the page 
+            // get the first and specific slug so which categorie in particular
             $term_slug = $terms[0]->slug;
+
         } else {
             // If there are no terms assigned to the page
             //echo 'No terms found for this page.';
@@ -127,12 +85,34 @@ function enqueue_custom_script() {
         'reference_value' => $reference_field_value
     ));
 
+   
+
 }
 
-add_action('wp_enqueue_scripts', 'enqueue_custom_script');
+add_action('wp_enqueue_scripts', 'charger_mon_script');
+
+//menu
+register_nav_menus(
+			array(
+				'primary' => esc_html__( 'Primary menu', 'mytheme' ),
+				'footer'  => esc_html__( 'Footer menu', 'mytheme' ),
+			)
+		);
+
+
+//logo
+function logo_setup() {
+    add_theme_support('custom-logo', array(
+        'height'      => 100,
+        'width'       => 200,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ));
+}
+add_action('after_setup_theme', 'logo_setup');
+
 
 // get dates for filters form //
-
 function get_unique_post_dates() {
     $dates = array();
     $args = array(
@@ -158,7 +138,7 @@ function get_unique_post_dates() {
     return $dates;
 }
 
-// cat filte form r//
+// categories filte form //
 function get_unique_post_categories() {
     $cats = array();
     $args = array(
@@ -190,7 +170,6 @@ function get_unique_post_categories() {
 }
 
 // format filter form //
-
 function get_unique_post_formats() {
     $formats = array();
     $args = array(
@@ -223,7 +202,6 @@ function get_unique_post_formats() {
 
 
 //filters load all //
-
 function loadAll(){
     $argsImages = array(  
         'post_type' => 'photo',
@@ -248,7 +226,6 @@ add_action('wp_ajax_loadAll', 'loadAll');
 add_action('wp_ajax_nopriv_loadAll', 'loadAll');
 
 //filters by cat //
-
 function filter_posts_by_category() {
     $selected_category = $_POST['category'];
 
@@ -284,7 +261,6 @@ add_action('wp_ajax_nopriv_filter_posts_by_category', 'filter_posts_by_category'
 
 
 // filter by format //
-
 function filter_posts_by_format() {
     $selected_format = $_POST['format'];
 
@@ -328,7 +304,6 @@ add_action('wp_ajax_nopriv_filter_posts_by_format', 'filter_posts_by_format');
 
 
 // filter date //
-
 function filter_posts() {
     $selectedDate = sanitize_text_field($_POST['selectedDate']);
     $args = array(
@@ -364,7 +339,6 @@ add_action('wp_ajax_nopriv_filter_posts', 'filter_posts');
 
 
 // light box overlay all//
-
 function load_overlay() {
 
     $args = array(
@@ -393,7 +367,6 @@ add_action('wp_ajax_nopriv_load_overlay', 'load_overlay');
 
 
 // fonctions for ajax in front-page to load more photos//
-
 function load_more_photos() {
     
     $page = $_POST['page'];
@@ -429,7 +402,7 @@ add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 
 
-
+//load 12 photos at first load//
 function first_load_photos() {
     // $posts = array();
      $args = array(
@@ -457,7 +430,7 @@ function first_load_photos() {
  add_action('wp_ajax_first_load_photos', 'first_load_photos');
  add_action('wp_ajax_nopriv_first_load_photos', 'first_load_photos');
  
-
+//load 2 images in single-photo page//
  function load_2images_Related(){
     $page_id = $_POST['postId'];
     $term_slug = $_POST['termSlug'];

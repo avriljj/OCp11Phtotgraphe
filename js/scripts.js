@@ -36,6 +36,21 @@ $(document).ready(function($) {
 });
     
 
+//if user logged in change the height of the hamburger //
+
+$(document).ready(function($) {
+    // Check if the user is logged in
+    if (loggedInStatus.loggedIn) {
+        // Apply CSS styles if logged in
+        $('.icons-header').css({
+            'display': 'block',
+            'position': 'absolute',
+            'top': '60px',
+            'right': '5%'
+        });
+    }
+});
+
 
    
 // // filters // load all  in filters //
