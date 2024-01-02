@@ -1,5 +1,49 @@
 var dataTable;
 var hasMorePhotos = true;
+
+
+// form contact //
+function openForm() {
+    $(document).ready(function () {
+
+        var referenceValue = custom_vars.reference_value;
+        $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
+    
+        
+        $('#menu-item-13').on('click', function (event) {
+            event.preventDefault();
+            console.log('clicked on the contact nav to open form');
+            $('#contact-form-overlay').css('display', 'flex');
+        });
+        $('#contact-form-open').on('click', function (event) {
+            //event.preventDefault();
+            console.log('clicked on the button open form');
+            $('#contact-form-overlay').css('display', 'flex');
+        });
+        $('#contact-form-overlay').on('click', function (e) {
+            // Check if the clicked element is not a descendant of the form
+            if (!$(e.target).closest('form').length) {
+                $('#contact-form-overlay').hide();
+            }
+        });
+        
+    });
+}
+
+function openFormFrontPage() {
+    $('#menu-item-13').on('click', function (event) {
+        event.preventDefault();
+        console.log('clicked on the contact nav to open form');
+        $('#contact-form-overlay').css('display', 'flex');
+    });
+    $('#contact-form-overlay').on('click', function (e) {
+        // Check if the clicked element is not a descendant of the form
+        if (!$(e.target).closest('form').length) {
+            $('#contact-form-overlay').hide();
+        }
+    });
+}
+
 // thumbnail on previous and next article //
 $(document).ready(function($) {
         $('.alignleft a, .alignright a').hover(function() {
@@ -20,7 +64,7 @@ $(document).ready(function($) {
                     thumbnailURL = $(response).find('.photo-content img').attr('src');
                     console.log(thumbnailURL);
 
-                    $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px');
+                    $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px').attr('width','100px');
 
 
                     //$('#thumbnail-container').html('<img width="100px" src="' + thumbnailURL + '" alt="Thumbnail">');
@@ -45,6 +89,7 @@ $(document).ready(function($) {
             'top': '60px',
             'right': '5%'
         });
+       
     }
 });
 
@@ -160,47 +205,6 @@ $(document).ready(function ($) {
 });
 
 
-// form contact //
-function openForm() {
-    $(document).ready(function () {
-
-        var referenceValue = custom_vars.reference_value;
-        $('.ref p span input[type="text"].wpcf7-text').val(referenceValue);
-    
-        
-        $('#menu-item-13').on('click', function (event) {
-            event.preventDefault();
-            console.log('clicked on the contact nav to open form');
-            $('#contact-form-overlay').css('display', 'flex');
-        });
-        $('#contact-form-open').on('click', function (event) {
-            //event.preventDefault();
-            console.log('clicked on the button open form');
-            $('#contact-form-overlay').css('display', 'flex');
-        });
-        $('#contact-form-overlay').on('click', function (e) {
-            // Check if the clicked element is not a descendant of the form
-            if (!$(e.target).closest('form').length) {
-                $('#contact-form-overlay').hide();
-            }
-        });
-        
-    });
-}
-
-function openFormFrontPage() {
-    $('#menu-item-13').on('click', function (event) {
-        event.preventDefault();
-        console.log('clicked on the contact nav to open form');
-        $('#contact-form-overlay').css('display', 'flex');
-    });
-    $('#contact-form-overlay').on('click', function (e) {
-        // Check if the clicked element is not a descendant of the form
-        if (!$(e.target).closest('form').length) {
-            $('#contact-form-overlay').hide();
-        }
-    });
-}
 // eye icon in photo_block when clicked //
 $(document).on('click', '#open-post', function (e) {
     e.preventDefault();
@@ -267,9 +271,9 @@ function show_overlay() {
         $('#prev-btn').on('click', function (e) {
             e.preventDefault();
             currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
-            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-            var photoReference = prevOverlayLink.data('photo-reference');
-            var categoryName = prevOverlayLink.data('category-name');
+            var currentOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = currentOverlayLink.data('photo-reference');
+            var categoryName = currentOverlayLink.data('category-name');
             updateImage(images, currentImageIndex, photoReference, categoryName);
         });
     
@@ -277,9 +281,9 @@ function show_overlay() {
         $('#next-btn').on('click', function (e) {
             e.preventDefault();
             currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
-            var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
-            var photoReference = prevOverlayLink.data('photo-reference');
-            var categoryName = prevOverlayLink.data('category-name');
+            var currentOverlayLink = $('.overlay-link').eq(currentImageIndex);
+            var photoReference = currentOverlayLink.data('photo-reference');
+            var categoryName = currentOverlayLink.data('category-name');
             updateImage(images, currentImageIndex, photoReference, categoryName);
         });
     
@@ -317,13 +321,8 @@ function show_overlay() {
             $('.category-name').text(categoryName);
             $('#dynamic-overlay').show();
         }
-                    //}
-                });
         
-        
-            
-        // Your code here
-   // });
+    });
 }
 
 function show_all_overlay() {
@@ -337,9 +336,6 @@ function show_all_overlay() {
         currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
         console.log(currentImageIndex);
         
-            var overlayLink = $(this).find('.overlay-link');
-               
-    
                         overlayContainer = $(dataTable);
     
                         images = $(dataTable).find('img:gt(0)');
@@ -440,9 +436,6 @@ function show_all_overlay() {
 }
 
 
-
-
-
 // load more photos when click on load more images button append newly loaded images //
 $(document).ready(function ($) {
     var page = 2;
@@ -488,9 +481,6 @@ $(document).ready(function ($) {
 });
 
 
-
-
-
 // ajax for first time load the photos 12 first //
 function getFirstPhotos() {
 
@@ -526,16 +516,13 @@ function getFirstPhotos() {
 }
 
 
-
-
-
 // load 2 images on single-photo page //
 
 function load2images() {
     $(document).ready(function () {
 
-        var postId = php_vars.postId;
-        var termSlug = php_vars.termSlug;
+        var postId = $('.related-images').data('post-id');
+        var termSlug = $('.related-images').data('term-slug');
       
             const ajaxurl = $('.related-images').data('ajaxurl');
         
@@ -552,7 +539,7 @@ function load2images() {
                 url: ajaxurl,
                 data: {
                     action: 'load_2images_Related',
-                    post_id: postId,
+                    postId: postId,
                     termSlug: termSlug,
     
                 },
@@ -713,7 +700,9 @@ function header() {
             }
             if (window.innerWidth >= 950) {
                 console.log('icons clicked.');
-                $(".fa-bars, .fa-xmark").css('display','none');
+                $(".fa-bars, .fa-xmark").css('display', 'none');
+               // $(".nav-menu").slideToggle();
+                
                 
             }
 
@@ -721,9 +710,13 @@ function header() {
                 if (window.innerWidth >= 950) {
                     $(".fa-bars").hide();
                     $(".fa-xmark").hide();
+                    // $(".nav-menu").slideToggle();
+                    $(".nav-menu").show();
+                    
                 } else {
                     $(".fa-bars").show();
                     $(".fa-xmark").hide();
+                   // $(".nav-menu").slideToggle();
                 }
             });
         });
@@ -777,3 +770,5 @@ function toggleLoadMoreButton() {
 }
 toggleLoadMoreButton();
 
+
+//thumbnail container//

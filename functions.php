@@ -432,6 +432,7 @@ function first_load_photos() {
  
 //load 2 images in single-photo page//
  function load_2images_Related(){
+    
     $page_id = $_POST['postId'];
     $term_slug = $_POST['termSlug'];
     $args = array(  
@@ -453,6 +454,7 @@ $query = new WP_Query($args);
         
     while ( $query->have_posts() ) : $query->the_post();
     
+   // var_dump($page_id);
      get_template_part('template-parts/content', 'photo_block');
     
      endwhile;

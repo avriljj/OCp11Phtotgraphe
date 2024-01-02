@@ -54,6 +54,10 @@ body.page article .entry-content {
   height: 80px;
 }
 
+.nav-menu {
+  display: block;
+}
+
 #menu-main-menu {
   display: flex;
   flex-direction: row;
@@ -250,12 +254,15 @@ a {
 }
 
 .wp-form {
+  width: 350px;
+  height: 545px;
   display: flex;
   flex-direction: column;
   margin-left: 14%;
 }
 .wp-form input {
   width: 263px;
+  height: 25px;
   border-radius: 5px;
   border: solid 1px grey;
 }
@@ -312,7 +319,7 @@ a {
   background: #fff;
   padding: 20px;
   padding-top: 160px;
-  width: 700px;
+  width: 400px;
 }
 
 .entry-header {
@@ -362,7 +369,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 35px;
+  margin-top: 65px;
 }
 .pre-divider .divider {
   width: 80vw;
@@ -389,17 +396,21 @@ a {
   flex-direction: column;
   height: 150px;
 }
-.navgation-container .navigation-sub-container .thumbnail-container {
+.navgation-container .navigation-sub-container #thumbnail-container {
   height: 100px;
+  width: 100px;
 }
-.navgation-container .navigation-sub-container .thumbnail-container img {
+.navgation-container .navigation-sub-container #thumbnail-container img {
   height: 100px;
+  object-fit: cover;
 }
 .navgation-container .navigation-sub-container .navigation {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 20px;
   height: 50px;
+  width: 100px;
 }
 
 .alignleft a, .alignright a {
@@ -595,12 +606,12 @@ select option:hover {
     align-items: center;
   }
   .nav-container .nav-menu .menu-main-menu-container {
-    height: 100%;
+    height: calc(1OOvh - 80px);
   }
   .nav-container .nav-menu .menu-main-menu-container #menu-main-menu {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(1OOvh - 80px);
     align-items: center;
     justify-content: center;
   }

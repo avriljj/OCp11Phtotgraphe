@@ -145,8 +145,7 @@ if (!empty($taxonomies)) {
 
 <div class="aime-aussi"><p>VOUS AIMEREZ AUSSI</p></div>
 
-<div class="related-images" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>"></div>
-
+<div class="related-images" data-ajaxurl="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-post-id="<?php echo esc_attr($page_id); ?>" data-term-slug="<?php echo esc_attr($term_slug); ?>"></div>
 <a class="main-page-button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><button>Toutes les photos</button></a>
 
             </article>

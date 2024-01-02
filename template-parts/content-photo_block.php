@@ -1,10 +1,11 @@
 <?php
 
 $post_content = get_the_content();
+//cette expression régulière recherche toutes les occurrences de balises <img> dans une chaîne de texte//
 $pattern = '/<img[^>]+>/i';
 preg_match_all($pattern, $post_content, $matches);
 
-// Additional information //
+
 $photo_reference = get_post_meta(get_the_ID(), 'reference', true);
 $category_terms = get_the_terms(get_the_ID(), 'categorie');
 $category_name = !empty($category_terms) ? $category_terms[0]->name : '';
