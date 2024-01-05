@@ -377,6 +377,8 @@ function first_load_photos() {
          'post_type'      => 'photo',
          'post_status'    => 'publish',
          'posts_per_page' => 12,
+         'orderby' => 'date',
+         'order' => 'DESC',
      );
      $query = new WP_Query($args);
  
@@ -406,6 +408,8 @@ function first_load_photos() {
     $args = array(  
         'post_type' => 'photo',
         'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
         'posts_per_page' => 2, 
         'post__not_in'   => array($page_id),
             'tax_query' => array(
