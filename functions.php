@@ -46,38 +46,6 @@ function charger_mon_script() {
        
     $current_post_id = get_the_ID();
     // returns category and format
-    $taxonomies = get_object_taxonomies('photo', 'names');
-    
-    if (!empty($taxonomies)) {
-
-        // choose category and not format
-        $taxonomy_slug = $taxonomies[0];
-    
-        // Get the terms (categories) associated with the current page in the custom taxonomy 
-        // get all the terms of the current post's categorie
-        $terms = get_the_terms($current_post_id, $taxonomy_slug);
-        
-        // Check if there are terms
-        if (!empty($terms)) {
-            // Assuming you want to use the first term assigned to the page 
-            // get the first and specific slug so which categorie in particular
-            $term_slug = $terms[0]->slug;
-
-        } else {
-            // If there are no terms assigned to the page
-            //echo 'No terms found for this page.';
-            return; // Stop execution if there are no terms
-        }
-    } else {
-        // If there are no custom taxonomies for pages
-        echo 'No custom taxonomies found for pages.';
-        return; // Stop execution if there are no custom taxonomies
-    }
-
-    wp_localize_script('custom-script', 'php_vars', array(
-        'postId'   => $current_post_id,
-        'termSlug' => $term_slug
-    ));
     
     $reference_field_value = get_post_meta($current_post_id, 'reference', true);
     
@@ -370,7 +338,7 @@ add_action('wp_ajax_nopriv_load_overlay', 'load_overlay');
 function load_more_photos() {
     
     $page = $_POST['page'];
-    $offset = ($page - 1) * 12; // Adjust posts_per_page and offset accordingly
+    $offset = ($page) * 12; // Adjust posts_per_page and offset accordingly
 
 
     $args = array(  

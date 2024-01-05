@@ -131,17 +131,7 @@ if (!empty($taxonomies)) {
 }
 ?>
 
-<script type="text/javascript">
-        jQuery(document).ready(function($) {
-            // Call your custom function when the document is ready
-            openFormFrontPage();
-            load2images();
-            show_overlay_2images();
-            openForm();
-            //hasMorePhotosFunc();
-            
-        });
-</script>
+
 
 <div class="aime-aussi"><p>VOUS AIMEREZ AUSSI</p></div>
 
@@ -154,4 +144,15 @@ if (!empty($taxonomies)) {
 
     </main>
 </div>
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // Call your custom function when the document is ready
+            openFormFrontPage();
+            load2images();
+            show_overlay_2images();
+            openForm();
+            //hasMorePhotosFunc();
+            
+        });
+</script>
 <?php get_footer(); ?>

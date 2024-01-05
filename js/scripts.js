@@ -1,5 +1,6 @@
 var dataTable;
 var hasMorePhotos = true;
+var page;
 
 
 // form contact //
@@ -65,9 +66,6 @@ $(document).ready(function($) {
                     console.log(thumbnailURL);
 
                     $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px').attr('width','100px');
-
-
-                    //$('#thumbnail-container').html('<img width="100px" src="' + thumbnailURL + '" alt="Thumbnail">');
                 }
             });
         }
@@ -437,9 +435,10 @@ function show_all_overlay() {
 }
 
 
-// load more photos when click on load more images button append newly loaded images //
+// load more photos 
+//when click on load more images button append newly loaded images //
 $(document).ready(function ($) {
-    var page = 2;
+    page = pages_vars.currentPage;
     
     console.log(page);
     $('#load-more-button').on('click', function (e) {
@@ -472,7 +471,8 @@ $(document).ready(function ($) {
                 dataTable = $('#posts-container').append(response);
                 console.log(dataTable);
                 show_all_overlay();
-                hasMorePhotos = false;
+                hasMorePhotosFunc();
+            
             },
             error: function (error) {
                 console.error('Error');
@@ -558,8 +558,7 @@ function load2images() {
 
 
 function show_overlay_2images() {
-    //var postId = $('.related-images').data('post-id');
-    //var termSlug = $('.related-images').data('term-slug');
+
 
         $(document).on('click', '.fa-expand', function (e) {
             e.preventDefault();
@@ -720,15 +719,15 @@ header();
 function hasMorePhotosFunc() {
     $(document).ready(function () {
         var total = pages_vars.totalPages;
-        var current = pages_vars.currentPage;
+       //var currentPage = pages_vars.currentPage;
         // Get the total number of pages and the current page from localized data
        
         console.log('hasmorebutton clicked');
         console.log(total);
-        console.log(current);
+        console.log(page);
     
         // Check if the current page is equal to the total number of pages
-        if (current >= total) {
+        if (page >= total) {
             // Do something if the current page is the last page
             console.log('Current page is the last page');
             // For example, you might want to return false in this case
