@@ -547,6 +547,7 @@ function load2images() {
                 success: function (response) {
                     console.log('Success: load_2images_Related works');
                     $('.related-images').html(response);
+                    dataTable = $(response);
                 },
                 error: function (error) {
                     console.error('Error');
@@ -557,64 +558,47 @@ function load2images() {
 
 
 function show_overlay_2images() {
-    var postId = php_vars.postId;
-    var termSlug = php_vars.termSlug;
+    //var postId = $('.related-images').data('post-id');
+    //var termSlug = $('.related-images').data('term-slug');
 
-        $(document).on('click', '.post-container', function (e) {
+        $(document).on('click', '.fa-expand', function (e) {
             e.preventDefault();
             console.log('click works in post-container');
             var currentImageIndex;
             var images2;
             var overlayContainer;
         
-            currentImageIndex = $('.post-container').index($(this));
-                    console.log(currentImageIndex);
+            currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
+            console.log(currentImageIndex);
             
-                var overlayLink = $(this).find('.overlay-link');
-                   
-                    const ajaxurl = overlayLink.data('ajaxurl'); 
-            
-                    $.ajax({
-                        url: ajaxurl,
-                        method: 'POST',
-                        data: {
-                            action: 'load_2images_Related',
-                            post_id: postId,
-                            termSlug: termSlug,
-                        },
-                        success: function (data) {
-        
-                            //console.log(data);
-                            overlayContainer = $(data);
-        
-                            images2 = $(data).find('img:gt(0)');
-                            console.log(images2);
+            overlayContainer = $(dataTable);
+                        
+            images = $(dataTable).find('img:not(#dynamic-image)');
+
+            console.log(images);
+                        
+                        
+                        if (images.length > 0) {
+                            images = $(dataTable).find('img:not(#dynamic-image)').filter(function() {
+                                var src = $.trim($(this).attr('src'));
+                                //var id = $(this).attr('id');
+                                return src !== '';
+                            });
+    
+                            var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
+                            var photoReference = currentOverlayLink.data('photo-reference');
+                            var categoryName = currentOverlayLink.data('category-name');
+                            
+                            console.log('bonjour');
+                            console.log('photoReference:', photoReference);
+                            console.log('categoryName:', categoryName);
                             
                             
-                            if (images2.length > 0) {
-                                images2 = $(data).find('img:gt(0)').filter(function() {
-                                    // Filter out images with no contents
-                                    return $.trim($(this).attr('src')) !== '';
-                                });
-        
-                                var currentOverlayLink = overlayContainer.find('.overlay-link').eq(currentImageIndex);
-                                var photoReference = currentOverlayLink.data('photo-reference');
-                                var categoryName = currentOverlayLink.data('category-name');
-                               // console.log(images2);
-                                console.log('bonjour');
-                                console.log('photoReference:', photoReference);
-                                console.log('categoryName:', categoryName);
-                                
-                                
-        
-                               
-                                updateImage(images2, currentImageIndex, photoReference, categoryName);
-                                $('#dynamic-overlay').show();
-        
-                            }
-                            
+    
+                           
+                            updateImage(images, currentImageIndex, photoReference, categoryName);
+    
                         }
-                    });
             
             
                 //detail page //
@@ -631,21 +615,21 @@ function show_overlay_2images() {
                 // Previous button click
                 $('#prev-btn').on('click', function (e) {
                     e.preventDefault();
-                    currentImageIndex = (currentImageIndex - 1 + (images2.length)) % (images2.length);
+                    currentImageIndex = (currentImageIndex - 1 + (images.length)) % (images.length);
                     var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
                     var photoReference = prevOverlayLink.data('photo-reference');
                     var categoryName = prevOverlayLink.data('category-name');
-                    updateImage(images2, currentImageIndex, photoReference, categoryName);
+                    updateImage(images, currentImageIndex, photoReference, categoryName);
                 });
             
                 // Next button click
                 $('#next-btn').on('click', function (e) {
                     e.preventDefault();
-                    currentImageIndex = (currentImageIndex + 1 + (images2.length)) % (images2.length);
+                    currentImageIndex = (currentImageIndex + 1 + (images.length)) % (images.length);
                     var prevOverlayLink = $('.overlay-link').eq(currentImageIndex);
                     var photoReference = prevOverlayLink.data('photo-reference');
                     var categoryName = prevOverlayLink.data('category-name');
-                    updateImage(images2, currentImageIndex, photoReference, categoryName);
+                    updateImage(images, currentImageIndex, photoReference, categoryName);
                 });
             
                 // Close overlay
@@ -674,14 +658,15 @@ function show_overlay_2images() {
                 });
             
                 // Function to update the image source
-                function updateImage(images2, index, photoReference, categoryName) {
-                    var imageUrl = $(images2[index]).attr('src');
+                function updateImage(images, index, photoReference, categoryName) {
+                    var imageUrl = $(images[index]).attr('src');
                     
                     $('#dynamic-image').attr('src', imageUrl);
                     $('.photo-reference').text(photoReference);
                     $('.category-name').text(categoryName);
                     $('#dynamic-overlay').show();
                 }
+            
         });
     }
     
