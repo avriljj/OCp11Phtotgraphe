@@ -4,15 +4,15 @@
     font-family: 'Space Mono';
     font-style: normal;
     font-weight: 400;
-    src: url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme2/assets/fonts/SpaceMono-Regular.woff2') format('woff2'),
-         url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme2/assets/fonts/SpaceMono-Regular.woff') format('woff');
+    src: url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Regular.woff2') format('woff2'),
+         url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Regular.woff') format('woff');
     }
     @font-face {
     font-family: 'Space Mono';
     font-style: normal;
     font-weight: 700;
-    src: url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme2/assets/fonts/SpaceMono-Bold.woff2') format('woff2'),
-         url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme2/assets/fonts/SpaceMono-Bold.woff') format('woff');
+    src: url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Bold.woff2') format('woff2'),
+         url('/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Bold.woff') format('woff');
     }
     
     body{
@@ -561,7 +561,8 @@ opacity: 1;
         width: 40vw;
         .overlay-link{
             width: 40vw;
-            img:nth-child(2){
+            height: 495px !important;
+            img{
                 width: 569px !important;
                 height: 495px !important;
                 object-fit: cover;
@@ -570,6 +571,27 @@ opacity: 1;
     }
 }
 
+.related-images{
+    width: 100vw !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    .post-container{
+        width: 40vw;
+        .overlay-link{
+            width: 40vw;
+            height: 495px !important;
+            img{
+                width: 569px !important;
+                height: 495px !important;
+                object-fit: cover;
+            }
+        }
+    }
+
+}
 #load-more-button-div{
     display: flex;
     flex-direction: row;

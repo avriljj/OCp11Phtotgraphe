@@ -29,7 +29,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 ?>
 <div class="category-div ">
     <div class="custom-select">
-<select name="filter-categorie" id="category-filter" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
+    <select name="filter-categorie" id="category-filter" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">   
         <option value="all" selected>CATEGORIES</option>
         <?php
         // Get a list of unique post dates

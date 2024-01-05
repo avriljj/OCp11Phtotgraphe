@@ -21,7 +21,8 @@ if (!empty($matches[0])) {
     //echo($category_name);
     //echo($photo_reference);
 
-    echo '<img>' . $matches[0][0] ;
+    echo $matches[0][0];
+    //var_dump($matches[0][0]);
     
 
     // Add Font Awesome icons for full screen and sending to another page

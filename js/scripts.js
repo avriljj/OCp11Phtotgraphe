@@ -218,7 +218,7 @@ $(document).on('click', '#open-post', function (e) {
 //overlay lightbox // ajax // //
 // show overlay for the first changed 12 photos//
 function show_overlay() {
-    $(document).on('click', '.fa-expand', function (e) {
+    $(document).on('click', 'i.fa-expand', function (e) {
         e.preventDefault();
         console.log('click works in post-container');
         var currentImageIndex;
@@ -229,12 +229,13 @@ function show_overlay() {
                
         overlayContainer = $(dataTable);
         console.log(overlayContainer);
-                        images = $(dataTable).find('img:gt(0)');
+                        images = $(dataTable).find('img');
+
                         console.log(images);
                         
                         
                         if (images.length > 0) {
-                            images = $(dataTable).find('img:gt(0)').filter(function() {
+                            images = $(dataTable).find('img').filter(function() {
                                 var src = $.trim($(this).attr('src'));
                                 var id = $(this).attr('id');
                                 return src !== '';
@@ -338,12 +339,12 @@ function show_all_overlay() {
         
                         overlayContainer = $(dataTable);
     
-                        images = $(dataTable).find('img:gt(0)');
+                        images = $(dataTable).find('img');
                         console.log(images);
                         
                         
                         if (images.length > 0) {
-                            images = $(dataTable).find('img:gt(0):not(:eq(1))').filter(function() {
+                            images = $(dataTable).find('img:gt(0)').filter(function() {
                                 // Filter out images with no contents
                                 console.log('Image src:', $(this).attr('src'));
                                 var src = $.trim($(this).attr('src'));
