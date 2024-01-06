@@ -491,19 +491,24 @@ opacity: 1;
     width: 100vw;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     .post-container{
-        width: 40vw;
+        width: 569px;
+        height: 495px;
+        //width: 40vw;
         .overlay-link{
-            img:nth-child(2){
+            width: 569px;
+            height: 495px;
+            img{
                 width: 569px !important;
                 height: 495px !important;
                 object-fit: cover;
             }
         }
-        
     }
+
 }
 
 //more images button //
@@ -533,8 +538,8 @@ opacity: 1;
     height: 100vh;
     figure {
         img{
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
         }
     }
@@ -551,17 +556,19 @@ opacity: 1;
 }
 
 #posts-container{
-    width: 100vw !important;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     .post-container{
-        width: 40vw;
+        //width: 40vw;
+        width: 569px;
+        height: 495px;
         .overlay-link{
-            width: 40vw;
-            height: 495px !important;
+            width: 569px;
+            height: 495px;
             img{
                 width: 569px !important;
                 height: 495px !important;
@@ -571,27 +578,7 @@ opacity: 1;
     }
 }
 
-.related-images{
-    width: 100vw !important;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    .post-container{
-        width: 40vw;
-        .overlay-link{
-            width: 40vw;
-            height: 495px !important;
-            img{
-                width: 569px !important;
-                height: 495px !important;
-                object-fit: cover;
-            }
-        }
-    }
 
-}
 #load-more-button-div{
     display: flex;
     flex-direction: row;
@@ -722,7 +709,7 @@ select{
 
     .icons-header{
         display: block;
-        position: absolute !important;
+        position: absolute;
         top: 20px;
         right: 5%;
     }
@@ -793,21 +780,23 @@ select{
         }
 
         #posts-container{
-            width: 100vw !important;
+            width: 100vw;
             
             .post-container{
-                width: 100vw;
+                width: 317px;
+                height: 278px;
                 display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
                 .overlay-link{
-                    width: 85vw;
+                    width: 317px;
+                    height: 278px;
                     display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-                    img:nth-child(2){
+                    img{
                         width: 317px !important;
                         height: 278px !important;
                         object-fit: cover;
@@ -820,11 +809,13 @@ select{
 
         .post-container {
             position: relative;
-            width: 100vw;
+            width: 317px;
+            height: 278px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
 
             .overlay {
                 z-index: 2;
@@ -882,8 +873,8 @@ select{
 
             .hero{
                 position: relative;
-                height: 253px !important;
-                width: 100vw !important;
+                height: 253px;
+                width: 100vw;
                 .header-title{
                     position: absolute;
                     max-width: 80%;
@@ -962,22 +953,24 @@ select{
             .related-images{
                 width: 100vw;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 justify-content: center;
                 gap: 20px;
                 .post-container{
-                    width: 100vw;
+                    width: 317px;
+                    height: 278px;
                     display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                     .overlay-link{
-                        width: 85vw;
+                        width: 317px;
+                        height: 278px;
                         display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                        img:nth-child(2){
+                        img{
                             width: 317px !important;
                             height: 278px !important;
                             object-fit: cover;

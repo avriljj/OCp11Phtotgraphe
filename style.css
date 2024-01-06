@@ -445,13 +445,19 @@ a {
   width: 100vw;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
 }
 .related-images .post-container {
-  width: 40vw;
+  width: 569px;
+  height: 495px;
 }
-.related-images .post-container .overlay-link img:nth-child(2) {
+.related-images .post-container .overlay-link {
+  width: 569px;
+  height: 495px;
+}
+.related-images .post-container .overlay-link img {
   width: 569px !important;
   height: 495px !important;
   object-fit: cover;
@@ -479,8 +485,8 @@ a {
   height: 100vh;
 }
 .hero figure img {
-  width: 100vw !important;
-  height: 100vh !important;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
 }
 
@@ -493,7 +499,7 @@ a {
 }
 
 #posts-container {
-  width: 100vw !important;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -501,34 +507,14 @@ a {
   gap: 20px;
 }
 #posts-container .post-container {
-  width: 40vw;
+  width: 569px;
+  height: 495px;
 }
 #posts-container .post-container .overlay-link {
-  width: 40vw;
-  height: 495px !important;
+  width: 569px;
+  height: 495px;
 }
 #posts-container .post-container .overlay-link img {
-  width: 569px !important;
-  height: 495px !important;
-  object-fit: cover;
-}
-
-.related-images {
-  width: 100vw !important;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-.related-images .post-container {
-  width: 40vw;
-}
-.related-images .post-container .overlay-link {
-  width: 40vw;
-  height: 495px !important;
-}
-.related-images .post-container .overlay-link img {
   width: 569px !important;
   height: 495px !important;
   object-fit: cover;
@@ -646,7 +632,7 @@ select option:hover {
   }
   .icons-header {
     display: block;
-    position: absolute !important;
+    position: absolute;
     top: 20px;
     right: 5%;
   }
@@ -694,30 +680,33 @@ select option:hover {
     width: 400px;
   }
   #posts-container {
-    width: 100vw !important;
+    width: 100vw;
   }
   #posts-container .post-container {
-    width: 100vw;
+    width: 317px;
+    height: 278px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   #posts-container .post-container .overlay-link {
-    width: 85vw;
+    width: 317px;
+    height: 278px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  #posts-container .post-container .overlay-link img:nth-child(2) {
+  #posts-container .post-container .overlay-link img {
     width: 317px !important;
     height: 278px !important;
     object-fit: cover;
   }
   .post-container {
     position: relative;
-    width: 100vw;
+    width: 317px;
+    height: 278px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -771,8 +760,8 @@ select option:hover {
   }
   .hero {
     position: relative;
-    height: 253px !important;
-    width: 100vw !important;
+    height: 253px;
+    width: 100vw;
   }
   .hero .header-title {
     position: absolute;
@@ -836,25 +825,27 @@ select option:hover {
   .related-images {
     width: 100vw;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     gap: 20px;
   }
   .related-images .post-container {
-    width: 100vw;
+    width: 317px;
+    height: 278px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .related-images .post-container .overlay-link {
-    width: 85vw;
+    width: 317px;
+    height: 278px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .related-images .post-container .overlay-link img:nth-child(2) {
+  .related-images .post-container .overlay-link img {
     width: 317px !important;
     height: 278px !important;
     object-fit: cover;
