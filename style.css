@@ -2,13 +2,13 @@
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Regular.woff2") format("woff2"), url("/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Regular.woff") format("woff");
+  src: url("../myTheme/assets/fonts/SpaceMono-Regular.woff2") format("woff2"), url("../myTheme/assets/fonts/SpaceMono-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 700;
-  src: url("/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Bold.woff2") format("woff2"), url("/OCWPformation/p11/wordpress/wp-content/themes/myTheme/assets/fonts/SpaceMono-Bold.woff") format("woff");
+  src: url("../myTheme/assets/fonts/SpaceMono-Bold.woff2") format("woff2"), url("../myTheme/assets/fonts/SpaceMono-Bold.woff") format("woff");
 }
 body {
   font-family: "Space Mono", monospace;
@@ -112,8 +112,8 @@ body.page article .entry-content {
   bottom: 50px;
   left: 50%;
   transform: translate(-50%, 0);
-  max-width: 564px;
-  max-height: 495px;
+  max-width: 800px;
+  max-height: 600px;
   object-fit: cover;
   display: block;
   margin: auto;
@@ -161,8 +161,8 @@ body.page article .entry-content {
 
 .overlay-close {
   position: absolute;
-  top: 100px;
-  right: 20%;
+  top: 60px;
+  right: 15%;
   width: 50px;
   height: 50px;
 }
@@ -339,6 +339,12 @@ a {
   width: 40vw;
   margin: 0 10px;
   padding: 0;
+}
+
+.wp-block-image img {
+  width: 840px !important;
+  height: 550px !important;
+  object-fit: cover;
 }
 
 .infos-text {

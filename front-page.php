@@ -76,16 +76,7 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
 </form> <!-- end of forms -->
 
-<script type="text/javascript">
-        jQuery(document).ready(function($) {
 
-            
-            openFormFrontPage();
-            getFirstPhotos();
-            show_overlay();
-            
-        });
-    </script>
 
 <div id="posts-container" data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
 </div>
@@ -97,4 +88,12 @@ while ( $loop->have_posts() ) : $loop->the_post(); ?>
 <div>
 <?php get_template_part('template-parts/content','contact');?></div>
 </div>
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            openFormFrontPage();
+            getFirstPhotos();
+            show_overlay();
+            
+        });
+    </script>
 <?php get_footer();

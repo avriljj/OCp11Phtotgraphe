@@ -1,7 +1,4 @@
 <div class="footer">
-    <!-- <button class="btn-close">X</button>
-    <div class="form-contact"><?php get_template_part('template-parts/content','contact');?></div>
--->
 <ul>
 
     <li><a href="<?php echo get_permalink(get_page_by_path('mentions-legales')); ?>">MENTIONS LEGALES</a></li>

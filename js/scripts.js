@@ -45,40 +45,28 @@ function openFormFrontPage() {
     });
 }
 
+function loadThumbnail(postURL) {
+    $.ajax({
+        type: 'GET',
+        url: postURL,
+        dataType: 'html',
+        success: function(response) {
+            var thumbnailURL;
+            thumbnailURL = $(response).find('.photo-content img').attr('src');
+            console.log(thumbnailURL);
+
+            $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px').attr('width','100px');
+        }
+    });
+}
+
+function removeThumbnail() {
+    $('#thumbnail-container img').empty();
+}
+
 // thumbnail on previous and next article //
-$(document).ready(function($) {
-        $('.alignleft a, .alignright a').hover(function() {
-            var postURL = $(this).attr('href');
-            console.log(postURL);
-            loadThumbnail(postURL);
-        }, function() {
-            removeThumbnail();
-        });
+$(document).ready(function ($) {
 
-        function loadThumbnail(postURL) {
-            $.ajax({
-                type: 'GET',
-                url: postURL,
-                dataType: 'html',
-                success: function(response) {
-                    var thumbnailURL;
-                    thumbnailURL = $(response).find('.photo-content img').attr('src');
-                    console.log(thumbnailURL);
-
-                    $('#thumbnail-container img').attr('src', thumbnailURL).attr('alt', 'Thumbnail').attr('height','100px').attr('width','100px');
-                }
-            });
-        }
-
-        function removeThumbnail() {
-            $('#thumbnail-container img').empty();
-        }
-});
-    
-
-//if user logged in change the height of the hamburger //
-$(document).ready(function($) {
-    // Check if the user is logged in
     if (loggedInStatus.loggedIn) {
         // Apply CSS styles if logged in
         $('.icons-header').css({
@@ -87,15 +75,146 @@ $(document).ready(function($) {
             'top': '60px',
             'right': '5%'
         });
-       
     }
+    //getFirstPhotos();
+    
+        $('.alignleft a, .alignright a').hover(function() {
+            var postURL = $(this).attr('href');
+            console.log(postURL);
+            loadThumbnail(postURL);
+        }, function() {
+            removeThumbnail();
+        });
+    
+        $('#category-filter').change(function() {
+            var selectedCategory = $(this).val();
+            const ajaxurl = $(this).data('ajaxurl');
+            if (selectedCategory == 'all') {
+                loadAll();
+            }
+            $.ajax({
+                method: 'POST',
+                url: ajaxurl,
+                data: {
+                    action: 'filter_posts_by_category',
+                    category: selectedCategory
+                },
+                success: function (data) {
+                    hasMorePhotos = false;
+                    $('#load-more-button').toggle(hasMorePhotos);
+                    // Update the content area with the retrieved posts
+                    console.log('works until data in category');
+                    $('#posts-container').html(data);
+                    dataTable = $('#posts-container').html(data);
+                    show_all_overlay();
+                    
+                }
+            });
+        });
+    
+        $('#filter-format').change(function() {
+            var selectedFormat = $(this).val();
+            const ajaxurl = $(this).data('ajaxurl');
+            if (selectedFormat == 'all') {
+                loadAll();
+            }
+            $.ajax({
+                method: 'POST',
+                url: ajaxurl,
+                data: {
+                    action: 'filter_posts_by_format',
+                    format: selectedFormat
+                },
+                success: function (data) {
+                    hasMorePhotos = false;
+                    $('#load-more-button').toggle(hasMorePhotos);
+                    // Update the content area with the retrieved posts
+                    console.log('works until data format');
+                    $('#posts-container').html(data);
+                    dataTable = $('#posts-container').html(data);
+                    show_all_overlay();
+                    
+                }
+            });
+        });
+    
+        $('#filter-date').change(function () {
+            var selectedDate = $(this).val();
+            const ajaxurl = $(this).data('ajaxurl');
+            // Make AJAX request
+            $.ajax({
+                type: 'POST',
+                url: ajaxurl, 
+                data: {
+                    action: 'filter_posts',
+                    selectedDate: selectedDate,
+                },
+                success: function (response) {
+                    hasMorePhotos = false;
+                    $('#load-more-button').toggle(hasMorePhotos);
+                    
+                    console.log('in the filter date');
+                    $('#posts-container').html(response);
+                    dataTable = $('#posts-container').html(response);
+                    show_all_overlay();
+                    
+                },
+            });
+        });
+
+    
+
+        page = pages_vars.currentPage;
+    
+        console.log(page);
+        $('#load-more-button').on('click', function (e) {
+            e.preventDefault(); // Prevent the default behavior of the link
+            
+            const ajaxurl = $(this).data('ajaxurl');
+    
+            if (!ajaxurl) {
+                console.error('Error: data-ajaxurl attribute not set on #load-more-button');
+                return;
+            }
+    
+            console.log('load more Button clicked, AJAX URL:', ajaxurl);
+    
+            // Make AJAX request
+            $.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {
+                    action: 'load_more_photos',
+                    page: page,
+                },
+                success: function (response) {
+    
+                    console.log('load the next photos success');
+                    page++;
+                    
+                    // Append the response to the dataTable
+                    
+                    dataTable = $('#posts-container').append(response);
+                    console.log(dataTable);
+                    show_all_overlay();
+                    hasMorePhotosFunc();
+                
+                },
+                error: function (error) {
+                    console.error('Error');
+                },
+            });
+        });
+    //load2images();
+    header();
+    hasMorePhotosFunc();
+    toggleLoadMoreButton();
+
 });
+    
 
-
-   
 // // filters // load all  in filters //
 function loadAll() {
-    $(document).ready(function ($) {
         const ajaxurl = $('#posts-container').data('ajaxurl');
         $.ajax({
             method: 'POST',
@@ -111,96 +230,9 @@ function loadAll() {
                 $('#posts-container').html(data);
             }
         });
-    })
         
 }
 
-//filter category //
-
-$(document).ready(function($) {
-    $('#category-filter').change(function() {
-        var selectedCategory = $(this).val();
-        const ajaxurl = $(this).data('ajaxurl');
-        if (selectedCategory == 'all') {
-            loadAll();
-        }
-        $.ajax({
-            method: 'POST',
-            url: ajaxurl,
-            data: {
-                action: 'filter_posts_by_category',
-                category: selectedCategory
-            },
-            success: function (data) {
-                hasMorePhotos = false;
-                $('#load-more-button').toggle(hasMorePhotos);
-                // Update the content area with the retrieved posts
-                console.log('works until data in category');
-                $('#posts-container').html(data);
-                dataTable = $('#posts-container').html(data);
-                show_all_overlay();
-                
-            }
-        });
-    });
-});
-
-// filter format //
-$(document).ready(function($) {
-    $('#filter-format').change(function() {
-        var selectedFormat = $(this).val();
-        const ajaxurl = $(this).data('ajaxurl');
-        if (selectedFormat == 'all') {
-            loadAll();
-        }
-        $.ajax({
-            method: 'POST',
-            url: ajaxurl,
-            data: {
-                action: 'filter_posts_by_format',
-                format: selectedFormat
-            },
-            success: function (data) {
-                hasMorePhotos = false;
-                $('#load-more-button').toggle(hasMorePhotos);
-                // Update the content area with the retrieved posts
-                console.log('works until data format');
-                $('#posts-container').html(data);
-                dataTable = $('#posts-container').html(data);
-                show_all_overlay();
-                
-            }
-        });
-    });
-});
-
-//filter date //
-
-$(document).ready(function ($) {
-    $('#filter-date').change(function () {
-        var selectedDate = $(this).val();
-        const ajaxurl = $(this).data('ajaxurl');
-        // Make AJAX request
-        $.ajax({
-            type: 'POST',
-            url: ajaxurl, 
-            data: {
-                action: 'filter_posts',
-                selectedDate: selectedDate,
-            },
-            success: function (response) {
-                hasMorePhotos = false;
-                $('#load-more-button').toggle(hasMorePhotos);
-                
-                console.log('in the filter date');
-                $('#posts-container').html(response);
-                dataTable = $('#posts-container').html(response);
-                show_all_overlay();
-                
-            },
-        });
-    });
-});
 
 
 // eye icon in photo_block when clicked //
@@ -224,7 +256,6 @@ function show_overlay() {
         var overlayContainer;
     
         currentImageIndex = $('.post-container').index($(this).closest('.post-container'));
-               
         overlayContainer = $(dataTable);
         console.log(overlayContainer);
                         images = $(dataTable).find('img');
@@ -435,62 +466,13 @@ function show_all_overlay() {
 }
 
 
-// load more photos 
-//when click on load more images button append newly loaded images //
-$(document).ready(function ($) {
-    page = pages_vars.currentPage;
-    
-    console.log(page);
-    $('#load-more-button').on('click', function (e) {
-        e.preventDefault(); // Prevent the default behavior of the link
-        
-        const ajaxurl = $(this).data('ajaxurl');
-
-        if (!ajaxurl) {
-            console.error('Error: data-ajaxurl attribute not set on #load-more-button');
-            return;
-        }
-
-        console.log('load more Button clicked, AJAX URL:', ajaxurl);
-
-        // Make AJAX request
-        $.ajax({
-            type: 'POST',
-            url: ajaxurl,
-            data: {
-                action: 'load_more_photos',
-                page: page,
-            },
-            success: function (response) {
-
-                console.log('load the next photos success');
-                page++;
-                
-                // Append the response to the dataTable
-                
-                dataTable = $('#posts-container').append(response);
-                console.log(dataTable);
-                show_all_overlay();
-                hasMorePhotosFunc();
-            
-            },
-            error: function (error) {
-                console.error('Error');
-            },
-        });
-    });
-});
-
-
 // ajax for first time load the photos 12 first //
 function getFirstPhotos() {
+    const ajaxurl = $('#posts-container').data('ajaxurl');
 
-    $(document).ready(function (){
-  
-        const ajaxurl =  $('#posts-container').data('ajaxurl');
 
         if (!ajaxurl) {
-            console.error('Error: data-ajaxurl attribute not set on #load-more-button');
+            console.error('Error: data-ajaxurl attribute not set on get first photos');
             return;
         }
 
@@ -512,7 +494,6 @@ function getFirstPhotos() {
             error: function (error) {
                 console.error('Error');
             },
-        });
 });
 }
 
@@ -520,12 +501,9 @@ function getFirstPhotos() {
 // load 2 images on single-photo page //
 
 function load2images() {
-    $(document).ready(function () {
-
         var postId = $('.related-images').data('post-id');
         var termSlug = $('.related-images').data('term-slug');
-      
-            const ajaxurl = $('.related-images').data('ajaxurl');
+        const ajaxurl = $('.related-images').data('ajaxurl');
         
             if (!ajaxurl) {
                 console.error('Error: data-ajaxurl not set ine load2imagesRelated');
@@ -553,13 +531,10 @@ function load2images() {
                     console.error('Error');
                 },
             });
-        });
 }
 
 
 function show_overlay_2images() {
-
-
         $(document).on('click', '.fa-expand', function (e) {
             e.preventDefault();
             console.log('click works in post-container');
@@ -673,9 +648,6 @@ function show_overlay_2images() {
 // when click on hamburger //
 
 function header() {
-
-    $(document).ready(function () {
-    
         $(".icons-header").on("click", function (e) {
             e.preventDefault();
             if (window.innerWidth < 950) {
@@ -705,23 +677,17 @@ function header() {
                 }
             });
         });
-    });
     
 }
-
-header();
-
 
 
 // toggle button //
 // check if theres more photos to load //
 
 function hasMorePhotosFunc() {
-    $(document).ready(function () {
         var total = pages_vars.totalPages;
-       //var currentPage = pages_vars.currentPage;
+        //var currentPage = pages_vars.currentPage;
         // Get the total number of pages and the current page from localized data
-       
         console.log('hasmorebutton clicked');
         console.log(total);
         console.log(page);
@@ -736,24 +702,18 @@ function hasMorePhotosFunc() {
             
         }
         return hasMorePhotos = true;;
-    });
 }
 
 
 // toggle the load more button //
 function toggleLoadMoreButton() {
-    $(document).ready(function ($) {
-
-
         // $('#load-more-button').toggle(hasMorePhotos);
         $('#load-more-button').on('click', function () {
-             hasMorePhotos = hasMorePhotosFunc();
-             $('#load-more-button').toggle(hasMorePhotos);
-         });
-    });
-    
+            hasMorePhotos = hasMorePhotosFunc();
+            $('#load-more-button').toggle(hasMorePhotos);
+        });
 }
-toggleLoadMoreButton();
+
 
 
 //thumbnail container//

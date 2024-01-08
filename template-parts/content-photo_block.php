@@ -40,8 +40,6 @@ if (!empty($matches[0])) {
 <div class="overlay-container" id="dynamic-overlay">
         <a class="overlay-close"><i class="fas fa-times"></i></a>
         <img id="dynamic-image" src="" alt="Dynamic Image">
-        
-
         <a href="#" class="overlay-prev" id="prev-btn"><i class="fa-solid fa-arrow-left-long"></i> Précédente</a>
         <a href="#" class="overlay-next" id="next-btn">Suivante <i class="fa-solid fa-arrow-right-long"></i></a>
         <span class="photo-reference"><?php echo esc_html($photo_reference)?></span>

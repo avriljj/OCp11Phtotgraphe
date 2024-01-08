@@ -422,7 +422,7 @@ function first_load_photos() {
             )
         
     );
-$query = new WP_Query($args);
+    $query = new WP_Query($args);
         
     while ( $query->have_posts() ) : $query->the_post();
     
