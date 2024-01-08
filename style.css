@@ -343,7 +343,7 @@ a {
 
 .wp-block-image img {
   width: 840px !important;
-  height: 550px !important;
+  height: 480px !important;
   object-fit: cover;
 }
 
