@@ -342,8 +342,8 @@ a {
 }
 
 .wp-block-image img {
-  width: 840px !important;
-  height: 480px !important;
+  width: 40vw !important;
+  height: 75vh !important;
   object-fit: cover;
 }
 
